@@ -1,0 +1,18 @@
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Class files
+*.class
+*.jar (kecuali di lib/)
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Keep libraries
+!lib/*.jar

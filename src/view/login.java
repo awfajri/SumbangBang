@@ -13,7 +13,7 @@ public class login extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(login.class.getName());
 
     /**
-     * Creates new form login
+     * Creates new form contoh
      */
     public login() {
         initComponents();
@@ -28,21 +28,98 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        Heading = new javax.swing.JLabel();
+        Heading_2 = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        fieldEmail = new javax.swing.JTextField();
+        labelEmail = new javax.swing.JLabel();
+        Logo = new javax.swing.JLabel();
+        labelPassword = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
+        labelRegister_1 = new javax.swing.JLabel();
+        labelRegister_2 = new javax.swing.JLabel();
+        bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 60, 90));
+        Heading.setFont(new java.awt.Font("Lufga", 1, 20)); // NOI18N
+        Heading.setForeground(new java.awt.Color(0, 113, 77));
+        Heading.setText("Welcome to SumbangBang");
+        getContentPane().add(Heading, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 128, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 570));
+        Heading_2.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        Heading_2.setForeground(new java.awt.Color(0, 113, 77));
+        Heading_2.setText("Berbagi Pangan, Berbagi Harapan");
+        getContentPane().add(Heading_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 161, -1, -1));
+
+        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
+        jPasswordField1.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 272, 46));
+
+        fieldEmail.setBackground(new java.awt.Color(255, 255, 255));
+        fieldEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        fieldEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
+        fieldEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldEmailActionPerformed(evt);
+            }
+        });
+        getContentPane().add(fieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 272, 46));
+
+        labelEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        labelEmail.setForeground(new java.awt.Color(142, 142, 147));
+        labelEmail.setText("Email");
+        getContentPane().add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 37, -1));
+
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+        Logo.setMaximumSize(new java.awt.Dimension(57, 84));
+        Logo.setPreferredSize(new java.awt.Dimension(57, 84));
+        getContentPane().add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 38, -1, -1));
+
+        labelPassword.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        labelPassword.setForeground(new java.awt.Color(142, 142, 147));
+        labelPassword.setText("Password");
+        getContentPane().add(labelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+
+        btnLogin.setBackground(new java.awt.Color(0, 175, 119));
+        btnLogin.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setText("Login");
+        btnLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 272, 41));
+
+        labelRegister_1.setFont(new java.awt.Font("Lufga", 1, 12)); // NOI18N
+        labelRegister_1.setForeground(new java.awt.Color(0, 113, 77));
+        labelRegister_1.setText("Daftar di sini");
+        getContentPane().add(labelRegister_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, -1, -1));
+
+        labelRegister_2.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        labelRegister_2.setForeground(new java.awt.Color(142, 142, 147));
+        labelRegister_2.setText("Belum Punya Akun?");
+        getContentPane().add(labelRegister_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, -1, -1));
+
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
+    private void fieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,7 +147,16 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel Heading;
+    private javax.swing.JLabel Heading_2;
+    private javax.swing.JLabel Logo;
+    private javax.swing.JLabel bg;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JTextField fieldEmail;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelPassword;
+    private javax.swing.JLabel labelRegister_1;
+    private javax.swing.JLabel labelRegister_2;
     // End of variables declaration//GEN-END:variables
 }

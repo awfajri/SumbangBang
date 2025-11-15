@@ -40,23 +40,23 @@ public class nih_coba extends javax.swing.JFrame {
         Heading_2.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
         Heading_2.setForeground(new java.awt.Color(255, 255, 255));
         Heading_2.setText("Berbagi Pangan, Berbagi Harapan");
-        getContentPane().add(Heading_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, -1, -1));
+        getContentPane().add(Heading_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
         Heading.setFont(new java.awt.Font("Lufga", 1, 20)); // NOI18N
         Heading.setForeground(new java.awt.Color(255, 255, 255));
         Heading.setText("Welcome to SumbangBang");
-        getContentPane().add(Heading, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
+        getContentPane().add(Heading, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
 
         btnLogin.setBackground(new java.awt.Color(0, 175, 119));
         btnLogin.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Get Started");
         btnLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
-        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 272, 41));
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 272, 41));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/heading splash scree.png"))); // NOI18N
         jLabel1.setPreferredSize(new java.awt.Dimension(57, 84));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/bg splash screen.jpg"))); // NOI18N
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 570));

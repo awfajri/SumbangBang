@@ -28,6 +28,7 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         dahboard = new java.awt.Panel();
         Heading = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
@@ -41,7 +42,10 @@ public class NewJFrame extends javax.swing.JFrame {
         panel3 = new java.awt.Panel();
         panel2 = new java.awt.Panel();
         labelRole2 = new javax.swing.JLabel();
+        button1 = new java.awt.Button();
         bg = new javax.swing.JLabel();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -125,6 +129,13 @@ public class NewJFrame extends javax.swing.JFrame {
         labelRole2.setText("Statistik");
         getContentPane().add(labelRole2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
+        button1.setBackground(new java.awt.Color(0, 175, 119));
+        button1.setFont(new java.awt.Font("Lufga", 1, 12)); // NOI18N
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setLabel("Tambah Donasi");
+        button1.setName(""); // NOI18N
+        getContentPane().add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, -1, -1));
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
         bg.setText("jLabel2");
         bg.setPreferredSize(new java.awt.Dimension(272, 174));
@@ -164,8 +175,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel bg;
     private javax.swing.JLabel bg_dashboard;
+    private java.awt.Button button1;
     private java.awt.Panel card_role;
     private java.awt.Panel dahboard;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel labelRole;
     private javax.swing.JLabel labelRole1;
     private javax.swing.JLabel labelRole2;

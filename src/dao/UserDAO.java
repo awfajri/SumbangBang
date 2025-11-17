@@ -115,4 +115,15 @@ public class UserDAO {
         }
         return "USR001";
     }
+    public int getCount(String tableName) {
+    String sql = "SELECT COUNT(*) AS total FROM " + tableName;
+    try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        if (rs.next()) {
+            return rs.getInt("total");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
 }

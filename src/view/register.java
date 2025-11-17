@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+import model.*;
+import service.AuthService;
 import javax.swing.JOptionPane;
 
 /**
@@ -138,20 +140,49 @@ public class register extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        String role   = (String) comboTypeAccount.getSelectedItem();
-        String nama   = fieldNama.getText().trim();
-        String email  = fieldEmail.getText().trim();
-        String pass   = new String(fieldPassword.getPassword());
+        // 1. Ambil data dari form
+        String role = (String) comboTypeAccount.getSelectedItem();
+        String nama = fieldNama.getText().trim();
+        String email = fieldEmail.getText().trim();
+        String pass = new String(fieldPassword.getPassword());
+        
+        // Default value untuk field spesifik
+        String phone = "08123456789"; // Sementara dummy atau tambah field di UI
+        String address = "Alamat Default"; // Sementara dummy atau tambah field di UI
 
-        if (nama.isEmpty() || email.isEmpty() || pass.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Lengkapi data.");
+        // 2. Validasi Input Dasar
+        if (nama.isEmpty() || email.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mohon lengkapi semua data!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // TODO: simpan ke DB atau model (contoh sederhana)
-        // DatabaseManager.getInstance().saveUser(new User(...));
+        // 3. Siapkan Objek User Berdasarkan Role
+        User newUser = null;
+        
+        // PENERIMA & ADMIN -> Sesuai logika database
+        if (role.equalsIgnoreCase("Donatur")) {
+            // Parameter: userId(null), name, email, password(null dulu), phone, address, businessType
+            newUser = new Donatur(null, nama, email, null, phone, address, "Perorangan"); 
+        } else if (role.equalsIgnoreCase("Penerima")) {
+            // Parameter: userId(null), name, email, password(null dulu), phone, address, recipientType
+            newUser = new Penerima(null, nama, email, null, phone, address, "Umum");
+        } else if (role.equalsIgnoreCase("Admin")) {
+             // Parameter: userId(null), name, email, password(null dulu), phone, address
+            newUser = new Admin(null, nama, email, null, phone, address);
+        }
 
-        Navigator.toLogin(this);
+        // 4. Panggil Service untuk Register
+        if (newUser != null) {
+            AuthService authService = new AuthService();
+            boolean success = authService.register(newUser, pass); // Password asli dikirim untuk di-hash
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Registrasi Berhasil! Silakan Login.");
+                Navigator.toLogin(this); // Pindah ke layar login
+            } else {
+                JOptionPane.showMessageDialog(this, "Registrasi Gagal. Email mungkin sudah terdaftar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void LinkLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LinkLoginMouseClicked

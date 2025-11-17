@@ -135,14 +135,36 @@ public class login extends javax.swing.JFrame {
         String pass  = new String(FieldPassword.getPassword());
 
         if (email.isEmpty() || pass.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Email/Password kosong.");
+            JOptionPane.showMessageDialog(this, "Email dan password tidak boleh kosong.");
             return;
         }
-        // TODO: verifikasi ke DB
-        // boolean ok = AuthService.login(email, pass);
-        // if(ok) Navigator.toDashboard(this); else ...
+        // Panggil Service untuk cek login
+    service.AuthService auth = new service.AuthService();
+    model.User user = auth.login(email, pass); // Pastikan AuthService return objek User, bukan null
 
-        JOptionPane.showMessageDialog(this, "Login Sukses.");
+    if (user != null) {
+        JOptionPane.showMessageDialog(this, "Login Berhasil! Selamat datang, " + user.getName());
+        this.dispose(); // Tutup jendela login
+
+        // LOGIKA REDIRECT BERDASARKAN ROLE
+        String role = user.getRole();
+        
+        if (role.equalsIgnoreCase("ADMIN")) {
+             // Kita akan buat DashboardAdmin di langkah selanjutnya
+             new DashboardAdmin(user).setVisible(true); 
+        } 
+        else if (role.equalsIgnoreCase("DONATUR")) {
+             // Kita perlu update DashboardDonatur agar menerima parameter User
+             new DashboardDonatur().setVisible(true); // Nanti kita update ini supaya pass 'user'
+        } 
+        else if (role.equalsIgnoreCase("PENERIMA")) {
+             // Kita perlu update DashboardPenerima agar menerima parameter User
+             new DashboardPenerima().setVisible(true); // Nanti kita update ini supaya pass 'user'
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Email atau Password salah!", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+    }
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void linkDaftarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkDaftarMouseClicked

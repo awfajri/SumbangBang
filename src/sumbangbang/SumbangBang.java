@@ -4,17 +4,17 @@
  */
 package sumbangbang;
 
-/**
- *
- * @author User
- */
+import model.User; // Pastikan import class User kamu
+import view.SplashScreen; // Asumsi kamu memanggil SplashScreen dulu
+
 public class SumbangBang {
 
-    /**
-     * @param args the command line arguments
-     */
+    // VARIABEL PENTING: Untuk menyimpan sesi login
+    public static User loggedInUser = null; 
+
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Kode main kamu, misal:
+        new SplashScreen().setVisible(true);
     }
     
 }

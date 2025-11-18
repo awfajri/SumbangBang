@@ -416,7 +416,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 280, 140));
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/bg panjang.jpg"))); // NOI18N
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/bg.jpg"))); // NOI18N
         bg.setText("jLabel2");
         bg.setPreferredSize(new java.awt.Dimension(272, 174));
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 678));

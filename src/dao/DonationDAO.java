@@ -164,4 +164,23 @@ public class DonationDAO {
         }
         return "DON001";
     }
+    
+    public FoodDonation getDonationById(String donationId) {
+    String sql = "SELECT * FROM food_donations WHERE donation_id = ?";
+    FoodDonation donation = null;
+
+    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, donationId);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            // Kita pakai helper method yang sudah kamu punya
+            donation = mapResultSetToDonation(rs); 
+        }
+        rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return donation;
+}
 }

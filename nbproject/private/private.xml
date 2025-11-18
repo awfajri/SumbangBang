@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/sumbangbang/SumbangBang.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/service/AuthService.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardDonatur.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/bg%20splash%20screen.jpg</file>
+            <file>file:/C:/Downloads/SumbangBang/src/view/login.java</file>
+            <file>file:/C:/Downloads/SumbangBang/src/view/SplashScreen.java</file>
+            <file>file:/C:/Downloads/SumbangBang/src/dao/DonationDAO.java</file>
         </group>
     </open-files>
 </project-private>

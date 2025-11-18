@@ -11,6 +11,13 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
     </Container>
+    <Component class="javax.swing.JLabel" name="bg_dashboard1">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/view/background.jpg"/>
+        </Property>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -209,17 +216,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jTextField16" min="-2" pref="110" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jTextField14" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField15" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jTextField17" min="-2" pref="110" max="-2" attributes="0"/>
-                          <EmptySpace pref="38" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jTextField16" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                      <Component id="jTextField14" max="32767" attributes="0"/>
+                      <Component id="jTextField15" max="32767" attributes="0"/>
+                      <Component id="jTextField17" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="332" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jTextField18" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="0" attributes="0">
@@ -228,13 +230,11 @@
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField3" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -244,7 +244,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -258,7 +258,7 @@
                           <Component id="jTextField3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextField17" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jTextField18" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
@@ -799,16 +799,13 @@
     <Component class="javax.swing.JLabel" name="bg">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/view/bg panjang.jpg"/>
+          <Image iconType="3" name="/view/background.jpg"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jLabel2"/>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[272, 174]"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="320" height="678"/>
+          <AbsoluteConstraints x="0" y="0" width="320" height="680"/>
         </Constraint>
       </Constraints>
     </Component>

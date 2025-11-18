@@ -78,11 +78,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -90,18 +85,32 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
         Heading = new javax.swing.JLabel();
+        btnLogout = new java.awt.Button();
+        lblDashboard = new javax.swing.JLabel();
+        lblReservasi = new javax.swing.JLabel();
+        lblComment = new javax.swing.JLabel();
+        lblDonate = new javax.swing.JLabel();
+        lblUser = new javax.swing.JLabel();
         panel1 = new java.awt.Panel();
+        labelDonasi = new java.awt.Label();
         panel3 = new java.awt.Panel();
         lblTotalReservasi = new java.awt.Label();
-        labeltotalreservasi = new java.awt.Label();
+        LabelReservasi = new java.awt.Label();
+        bg3 = new javax.swing.JLabel();
         panel4 = new java.awt.Panel();
-        labeltotaluser = new java.awt.Label();
+        LabelUser = new java.awt.Label();
         lblTotalUser = new java.awt.Label();
+        bg1 = new javax.swing.JLabel();
         panel5 = new java.awt.Panel();
         lblTotalDonasi = new java.awt.Label();
-        labeltotaldonasi = new java.awt.Label();
+        labelDonasi1 = new java.awt.Label();
+        bg2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableAktivitas = new javax.swing.JTable();
+        labelDonasi2 = new java.awt.Label();
+        panel2 = new java.awt.Panel();
+        bg4 = new javax.swing.JLabel();
+        labelDonasi3 = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -109,26 +118,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel3.setPreferredSize(new java.awt.Dimension(223, 744));
-
-        jLabel1.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(138, 140, 144));
-        jLabel1.setText("Dashboard");
-
-        jLabel2.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(138, 140, 144));
-        jLabel2.setText("Semua Reservasi");
-
-        jLabel3.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(138, 140, 144));
-        jLabel3.setText("Semua Komentar");
-
-        jLabel4.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(138, 140, 144));
-        jLabel4.setText("Semua Donasi");
-
-        jLabel5.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(138, 140, 144));
-        jLabel5.setText("Semua User");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/SquaresFour.png"))); // NOI18N
 
@@ -159,6 +148,56 @@ public class DashboardAdmin extends javax.swing.JFrame {
         Heading.setForeground(new java.awt.Color(0, 175, 119));
         Heading.setText("SumbangBang");
 
+        btnLogout.setBackground(new java.awt.Color(255, 96, 96));
+        btnLogout.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogout.setLabel("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        lblDashboard.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        lblDashboard.setForeground(new java.awt.Color(138, 140, 144));
+        lblDashboard.setText("Dashboard");
+
+        lblReservasi.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        lblReservasi.setForeground(new java.awt.Color(138, 140, 144));
+        lblReservasi.setText("Semua Reservasi");
+        lblReservasi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblReservasiMouseClicked(evt);
+            }
+        });
+
+        lblComment.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        lblComment.setForeground(new java.awt.Color(138, 140, 144));
+        lblComment.setText("Semua Komentar");
+        lblComment.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCommentMouseClicked(evt);
+            }
+        });
+
+        lblDonate.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        lblDonate.setForeground(new java.awt.Color(138, 140, 144));
+        lblDonate.setText("Semua Donasi");
+        lblDonate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDonateMouseClicked(evt);
+            }
+        });
+
+        lblUser.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(138, 140, 144));
+        lblUser.setText("Semua User");
+        lblUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblUserMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -178,14 +217,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                            .addComponent(lblDonate)
+                            .addComponent(lblComment)
+                            .addComponent(lblReservasi)
+                            .addComponent(lblDashboard)
+                            .addComponent(lblUser)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,26 +237,30 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(Heading)
                     .addComponent(Logo))
                 .addGap(31, 31, 31)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel6))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel7)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblDashboard)
+                        .addGap(29, 29, 29)
+                        .addComponent(lblReservasi)
+                        .addGap(32, 32, 32)
+                        .addComponent(lblComment)
+                        .addGap(32, 32, 32)
+                        .addComponent(lblDonate)))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(427, Short.MAX_VALUE))
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUser))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -223,54 +269,85 @@ public class DashboardAdmin extends javax.swing.JFrame {
         panel1.setPreferredSize(new java.awt.Dimension(910, 744));
         panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        labelDonasi.setFont(new java.awt.Font("Lufga", 1, 18)); // NOI18N
+        labelDonasi.setForeground(new java.awt.Color(0, 175, 119));
+        labelDonasi.setName(""); // NOI18N
+        labelDonasi.setText("Aktivitas");
+        panel1.add(labelDonasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 100, -1));
+
         panel3.setBackground(new java.awt.Color(0, 175, 119));
         panel3.setPreferredSize(new java.awt.Dimension(426, 82));
         panel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTotalReservasi.setFont(new java.awt.Font("Lufga", 1, 24)); // NOI18N
+        lblTotalReservasi.setAlignment(java.awt.Label.CENTER);
+        lblTotalReservasi.setFont(new java.awt.Font("Lufga Black", 1, 36)); // NOI18N
         lblTotalReservasi.setForeground(new java.awt.Color(255, 255, 255));
-        panel3.add(lblTotalReservasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
+        lblTotalReservasi.setPreferredSize(new java.awt.Dimension(4, 47));
+        panel3.add(lblTotalReservasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 110, -1));
 
-        labeltotalreservasi.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
-        labeltotalreservasi.setForeground(new java.awt.Color(255, 255, 255));
-        labeltotalreservasi.setName(""); // NOI18N
-        labeltotalreservasi.setText("Total Reservasi");
-        panel3.add(labeltotalreservasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 120, -1));
+        LabelReservasi.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
+        LabelReservasi.setForeground(new java.awt.Color(255, 255, 255));
+        LabelReservasi.setName(""); // NOI18N
+        LabelReservasi.setText("Total Reservasi");
+        panel3.add(LabelReservasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 120, -1));
 
-        panel1.add(panel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
+        bg3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Total Donasi.jpg"))); // NOI18N
+        bg3.setText("jLabel2");
+        bg3.setPreferredSize(new java.awt.Dimension(426, 82));
+        panel3.add(bg3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, -1));
+
+        panel1.add(panel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, -1));
 
         panel4.setBackground(new java.awt.Color(0, 175, 119));
         panel4.setPreferredSize(new java.awt.Dimension(862, 82));
         panel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labeltotaluser.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
-        labeltotaluser.setForeground(new java.awt.Color(255, 255, 255));
-        labeltotaluser.setName(""); // NOI18N
-        labeltotaluser.setText("Total User");
-        panel4.add(labeltotaluser, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 100, -1));
+        LabelUser.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
+        LabelUser.setForeground(new java.awt.Color(255, 255, 255));
+        LabelUser.setName(""); // NOI18N
+        LabelUser.setText("Total User");
+        panel4.add(LabelUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 100, -1));
 
-        lblTotalUser.setFont(new java.awt.Font("Lufga", 1, 24)); // NOI18N
+        lblTotalUser.setAlignment(java.awt.Label.CENTER);
+        lblTotalUser.setFont(new java.awt.Font("Lufga Black", 1, 36)); // NOI18N
         lblTotalUser.setForeground(new java.awt.Color(255, 255, 255));
-        panel4.add(lblTotalUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
+        lblTotalUser.setPreferredSize(new java.awt.Dimension(4, 47));
+        panel4.add(lblTotalUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 70, -1));
 
-        panel1.add(panel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        bg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/card_stats.jpg"))); // NOI18N
+        bg1.setText("jLabel2");
+        bg1.setPreferredSize(new java.awt.Dimension(426, 82));
+        panel4.add(bg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, -1));
+
+        panel1.add(panel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
         panel5.setBackground(new java.awt.Color(0, 175, 119));
         panel5.setPreferredSize(new java.awt.Dimension(426, 82));
         panel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTotalDonasi.setFont(new java.awt.Font("Lufga", 1, 24)); // NOI18N
+        lblTotalDonasi.setAlignment(java.awt.Label.CENTER);
+        lblTotalDonasi.setFont(new java.awt.Font("Lufga Black", 1, 36)); // NOI18N
         lblTotalDonasi.setForeground(new java.awt.Color(255, 255, 255));
-        panel5.add(lblTotalDonasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
+        lblTotalDonasi.setPreferredSize(new java.awt.Dimension(4, 47));
+        panel5.add(lblTotalDonasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 90, -1));
 
-        labeltotaldonasi.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
-        labeltotaldonasi.setForeground(new java.awt.Color(255, 255, 255));
-        labeltotaldonasi.setName(""); // NOI18N
-        labeltotaldonasi.setText("Total Donasi");
-        panel5.add(labeltotaldonasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 100, -1));
+        labelDonasi1.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
+        labelDonasi1.setForeground(new java.awt.Color(255, 255, 255));
+        labelDonasi1.setName("Total Donasi"); // NOI18N
+        labelDonasi1.setText("Total Donasi");
+        panel5.add(labelDonasi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 100, -1));
 
-        panel1.add(panel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        bg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Total Donasi.jpg"))); // NOI18N
+        bg2.setText("jLabel2");
+        bg2.setPreferredSize(new java.awt.Dimension(426, 82));
+        panel5.add(bg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, -1));
 
+        panel1.add(panel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+
+        jScrollPane1.setFont(new java.awt.Font("Lufga SemiBold", 0, 14)); // NOI18N
+
+        tableAktivitas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(0, 204, 153), null, null));
+        tableAktivitas.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         tableAktivitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -284,12 +361,74 @@ public class DashboardAdmin extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableAktivitas);
 
-        panel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 402, 860, 260));
+        panel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 860, 300));
+
+        labelDonasi2.setFont(new java.awt.Font("Lufga", 1, 12)); // NOI18N
+        labelDonasi2.setForeground(new java.awt.Color(142, 142, 147));
+        labelDonasi2.setName(""); // NOI18N
+        labelDonasi2.setText("Monitoring & Management System");
+        panel1.add(labelDonasi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 210, -1));
+
+        panel2.setBackground(new java.awt.Color(0, 175, 119));
+        panel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        bg4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/pattern.jpg"))); // NOI18N
+        bg4.setText("jLabel2");
+        bg4.setPreferredSize(new java.awt.Dimension(426, 82));
+        panel2.add(bg4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 70));
+
+        panel1.add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 70));
+
+        labelDonasi3.setFont(new java.awt.Font("Lufga", 1, 18)); // NOI18N
+        labelDonasi3.setForeground(new java.awt.Color(0, 175, 119));
+        labelDonasi3.setName(""); // NOI18N
+        labelDonasi3.setText("Admin Dashboard");
+        panel1.add(labelDonasi3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 170, -1));
 
         getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 920, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblReservasiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblReservasiMouseClicked
+        // TODO add your handling code here:
+        new DashboardAdmin_semuaReservasi(adminUser).setVisible(true);
+        this.dispose(); // Tutup dashboard utama
+    }//GEN-LAST:event_lblReservasiMouseClicked
+
+    private void lblCommentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCommentMouseClicked
+        // TODO add your handling code here:
+        new DashboardAdmin_semuaKomentar(adminUser).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblCommentMouseClicked
+
+    private void lblDonateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDonateMouseClicked
+        // TODO add your handling code here:
+        new DashboardAdmin_semuaDonasi(adminUser).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblDonateMouseClicked
+
+    private void lblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUserMouseClicked
+        // TODO add your handling code here:
+        new DashboardAdmin_semuaUser(adminUser).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblUserMouseClicked
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        // 1. Tampilkan Dialog Konfirmasi
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Anda yakin ingin keluar dari sistem?", 
+            "Konfirmasi Logout", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        // 2. Jika user memilih YES
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            // Panggil helper Navigator untuk pindah ke halaman Login
+            Navigator.toLogin(this); 
+            // Frame Dashboard ini otomatis di-dispose oleh Navigator.toLogin(this)
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,26 +457,35 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Heading;
+    private java.awt.Label LabelReservasi;
+    private java.awt.Label LabelUser;
     private javax.swing.JLabel Logo;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel bg1;
+    private javax.swing.JLabel bg2;
+    private javax.swing.JLabel bg3;
+    private javax.swing.JLabel bg4;
+    private java.awt.Button btnLogout;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private java.awt.Label labeltotaldonasi;
-    private java.awt.Label labeltotalreservasi;
-    private java.awt.Label labeltotaluser;
+    private java.awt.Label labelDonasi;
+    private java.awt.Label labelDonasi1;
+    private java.awt.Label labelDonasi2;
+    private java.awt.Label labelDonasi3;
+    private javax.swing.JLabel lblComment;
+    private javax.swing.JLabel lblDashboard;
+    private javax.swing.JLabel lblDonate;
+    private javax.swing.JLabel lblReservasi;
     private java.awt.Label lblTotalDonasi;
     private java.awt.Label lblTotalReservasi;
     private java.awt.Label lblTotalUser;
+    private javax.swing.JLabel lblUser;
     private java.awt.Panel panel1;
+    private java.awt.Panel panel2;
     private java.awt.Panel panel3;
     private java.awt.Panel panel4;
     private java.awt.Panel panel5;

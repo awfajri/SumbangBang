@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/sumbangbang/SumbangBang.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/service/AuthService.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardPenerima.java</file>
             <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardDonatur.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/bg%20splash%20screen.jpg</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/pattern.jpg</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardAdmin_semuaDonasi.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardAdmin_semuaKomentar.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardAdmin_semuaReservasi.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/dao/DonationDAO.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/dao/UserDAO.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/dao/AdminDAO.java</file>
         </group>
     </open-files>
 </project-private>

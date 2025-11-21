@@ -3,27 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/dao/AdminDAO.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/dao/DonationDAO.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardDonatur.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/SplashScreen.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardAdmin.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/BowlFood.png</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/CalendarDots.png</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/sumbangbang/SumbangBang.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/register.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/login.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DashboardPenerima.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/FormDonatur.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/ListDonatur.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/service/AuthService.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/model/FoodDonation.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/list_penerima.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/contoh.java</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/SquaresFour.png</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/card_stats.jpg</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/bg_dashboard.jpg</file>
-            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/background.jpg</file>
+            <file>file:/C:/Downloads/SumbangBang/src/view/login.java</file>
+            <file>file:/C:/Downloads/SumbangBang/src/view/SplashScreen.java</file>
+            <file>file:/C:/Downloads/SumbangBang/src/dao/DonationDAO.java</file>
         </group>
     </open-files>
 </project-private>

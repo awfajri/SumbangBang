@@ -4,19 +4,68 @@
  */
 package view;
 
-/**
- *
- * @author User
- */
+import dao.DonationDAO;
+import model.FoodDonation;
+import sumbangbang.SumbangBang;
+import java.sql.Date;
+import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
+
 public class FormDonatur extends javax.swing.JFrame {
-    
+    private DashboardDonatur parentDashboard;
+    private boolean isEditMode = false;
+    private String donationIdToEdit = null;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormDonatur.class.getName());
 
-    /**
-     * Creates new form login
-     */
     public FormDonatur() {
         initComponents();
+        this.parentDashboard = null; // Tidak ada dashboard yang memanggil
+    }
+    
+    public FormDonatur(DashboardDonatur parent) {
+        initComponents();
+        this.parentDashboard = parent; // Simpan dashboard-nya
+    }
+    
+    public FormDonatur(DashboardDonatur parent, String donationId) {
+        initComponents();
+        this.parentDashboard = parent;
+        
+        // === SET MODE EDIT ===
+        this.isEditMode = true;
+        this.donationIdToEdit = donationId;
+        
+        // Ubah teks tombol
+        btnPostDonasi.setText("Update Donasi");
+        
+        // Panggil method untuk memuat data lama
+        loadDataForEdit(donationId);
+    }
+    
+    private void loadDataForEdit(String donationId) {
+        try {
+            DonationDAO dao = new DonationDAO();
+            FoodDonation donation = dao.getDonationById(donationId);
+
+            if (donation != null) {
+                // Isi semua field dengan data dari database
+                // (Ganti 'namaField' dengan nama variabel JTextfield kamu)
+                fieldNama.setText(donation.getFoodName());
+                fieldJumlah.setText(String.valueOf(donation.getQuantity()));
+                fieldLokasi.setText(donation.getPickupLocation());
+                
+                // Konversi java.sql.Date ke String
+                // Sesuaikan format "MM/dd/yyyy" jika perlu
+                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                fieldTanggal.setText(format.format(donation.getExpiryDate()));
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal memuat data donasi.");
+                this.dispose();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -32,13 +81,13 @@ public class FormDonatur extends javax.swing.JFrame {
         Heading_2 = new javax.swing.JLabel();
         labelNama = new javax.swing.JLabel();
         fieldNama = new javax.swing.JTextField();
-        fieldEmail = new javax.swing.JTextField();
+        fieldJumlah = new javax.swing.JTextField();
         labelEmail = new javax.swing.JLabel();
         labelPassword = new javax.swing.JLabel();
-        btnRegister = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnPostDonasi = new javax.swing.JButton();
+        fieldTanggal = new javax.swing.JTextField();
         labelPassword1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        fieldLokasi = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,11 +114,11 @@ public class FormDonatur extends javax.swing.JFrame {
         fieldNama.setPreferredSize(new java.awt.Dimension(272, 44));
         getContentPane().add(fieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
 
-        fieldEmail.setBackground(new java.awt.Color(255, 255, 255));
-        fieldEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
-        fieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
-        fieldEmail.setPreferredSize(new java.awt.Dimension(272, 44));
-        getContentPane().add(fieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        fieldJumlah.setBackground(new java.awt.Color(255, 255, 255));
+        fieldJumlah.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        fieldJumlah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
+        fieldJumlah.setPreferredSize(new java.awt.Dimension(272, 44));
+        getContentPane().add(fieldJumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         labelEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(142, 142, 147));
@@ -81,34 +130,36 @@ public class FormDonatur extends javax.swing.JFrame {
         labelPassword.setText("Tanggal Kadaluarsa");
         getContentPane().add(labelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
 
-        btnRegister.setBackground(new java.awt.Color(0, 175, 119));
-        btnRegister.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
-        btnRegister.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegister.setText("Post Donasi");
-        btnRegister.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
-        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+        btnPostDonasi.setBackground(new java.awt.Color(0, 175, 119));
+        btnPostDonasi.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
+        btnPostDonasi.setForeground(new java.awt.Color(255, 255, 255));
+        btnPostDonasi.setText("Post Donasi");
+        btnPostDonasi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
+        btnPostDonasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegisterActionPerformed(evt);
+                btnPostDonasiActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 272, 41));
+        getContentPane().add(btnPostDonasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 272, 41));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTextField1.setCaretColor(new java.awt.Color(224, 224, 224));
-        jTextField1.setPreferredSize(new java.awt.Dimension(272, 44));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        fieldTanggal.setBackground(new java.awt.Color(255, 255, 255));
+        fieldTanggal.setForeground(new java.awt.Color(0, 0, 0));
+        fieldTanggal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        fieldTanggal.setCaretColor(new java.awt.Color(224, 224, 224));
+        fieldTanggal.setPreferredSize(new java.awt.Dimension(272, 44));
+        getContentPane().add(fieldTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         labelPassword1.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelPassword1.setForeground(new java.awt.Color(142, 142, 147));
         labelPassword1.setText("Lokasi Pengambilan");
         getContentPane().add(labelPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTextField2.setCaretColor(new java.awt.Color(224, 224, 224));
-        jTextField2.setPreferredSize(new java.awt.Dimension(272, 44));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
+        fieldLokasi.setBackground(new java.awt.Color(255, 255, 255));
+        fieldLokasi.setForeground(new java.awt.Color(0, 0, 0));
+        fieldLokasi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        fieldLokasi.setCaretColor(new java.awt.Color(224, 224, 224));
+        fieldLokasi.setPreferredSize(new java.awt.Dimension(272, 44));
+        getContentPane().add(fieldLokasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
         bg.setText("jLabel2");
@@ -117,9 +168,87 @@ public class FormDonatur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegisterActionPerformed
+    private void btnPostDonasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostDonasiActionPerformed
+    // 1. Ambil data dari Form (Ganti 'namaField' dengan nama variabel kamu)
+    String foodName = fieldNama.getText().trim();
+    String quantityStr = fieldJumlah.getText().trim();
+    String expiryDateStr = fieldTanggal.getText().trim(); // Asumsi ini JTextfield
+    String location = fieldLokasi.getText().trim();
+
+    // 2. Validasi Input Sederhana
+    if (foodName.isEmpty() || quantityStr.isEmpty() || expiryDateStr.isEmpty() || location.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 3. Persiapan Data untuk DAO
+    try {
+        DonationDAO dao = new DonationDAO();
+        
+        // Konversi quantity (jumlah) ke angka
+        int quantity = Integer.parseInt(quantityStr);
+        
+        // Konversi tanggal (String ke java.sql.Date)
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        java.util.Date parsedDate = format.parse(expiryDateStr);
+        java.sql.Date expiryDate = new java.sql.Date(parsedDate.getTime());
+
+        // Buat Objek FoodDonation
+        FoodDonation donation = new FoodDonation();
+        donation.setFoodName(foodName);
+        donation.setQuantity(quantity);
+        donation.setExpiryDate(expiryDate);
+        donation.setPickupLocation(location);
+        donation.setDescription(foodName); // (atau tambahkan field deskripsi)
+
+        // === INI LOGIKA BARUNYA (EDIT vs INSERT) ===
+        boolean isSuccess = false;
+        
+        if (isEditMode) {
+            // === MODE UPDATE ===
+            donation.setDonationId(this.donationIdToEdit); // Pasang ID lama
+            // Panggil method 'updateDonation' dari DAO kamu
+            isSuccess = dao.updateDonation(donation); 
+            
+        } else {
+            // === MODE INSERT BARU ===
+            String donorId = SumbangBang.loggedInUser.getUserId();
+            String newDonationId = dao.generateDonationId();
+            
+            donation.setDonationId(newDonationId);
+            donation.setDonorId(donorId);
+            donation.setStatus("AVAILABLE");
+            
+            // Panggil method 'insertDonation' dari DAO kamu
+            isSuccess = dao.insertDonation(donation); 
+        }
+
+        // 6. Tampilkan pesan berdasarkan hasil
+        if (isSuccess) {
+            String message = isEditMode ? "Donasi berhasil di-update!" : "Donasi berhasil diposting!";
+            JOptionPane.showMessageDialog(this, message);
+            
+            // Suruh dashboard untuk refresh datanya
+            if (this.parentDashboard != null) {
+                this.parentDashboard.loadDashboardData();
+            }
+            
+            this.dispose(); // Tutup form ini
+            
+        } else {
+            String message = isEditMode ? "Gagal meng-update donasi." : "Gagal memposting donasi.";
+            JOptionPane.showMessageDialog(this, message, "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Jumlah Porsi harus berupa angka.", "Input Error", JOptionPane.ERROR_MESSAGE);
+    } catch (java.text.ParseException e) {
+        JOptionPane.showMessageDialog(this, "Format Tanggal Kadaluarsa salah. Gunakan format: MM/dd/yyyy", "Input Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnPostDonasiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,11 +279,11 @@ public class FormDonatur extends javax.swing.JFrame {
     private javax.swing.JLabel Heading;
     private javax.swing.JLabel Heading_2;
     private javax.swing.JLabel bg;
-    private javax.swing.JButton btnRegister;
-    private javax.swing.JTextField fieldEmail;
+    private javax.swing.JButton btnPostDonasi;
+    private javax.swing.JTextField fieldJumlah;
+    private javax.swing.JTextField fieldLokasi;
     private javax.swing.JTextField fieldNama;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField fieldTanggal;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelNama;
     private javax.swing.JLabel labelPassword;

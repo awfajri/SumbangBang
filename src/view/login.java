@@ -145,6 +145,8 @@ public class login extends javax.swing.JFrame {
     if (user != null) {
         JOptionPane.showMessageDialog(this, "Login Berhasil! Selamat datang, " + user.getName());
         this.dispose(); // Tutup jendela login
+        
+        sumbangbang.SumbangBang.loggedInUser = user;
 
         // LOGIKA REDIRECT BERDASARKAN ROLE
         String role = user.getRole();

@@ -57,17 +57,15 @@ public class register extends javax.swing.JFrame {
         Heading_2.setFont(new java.awt.Font("Lufga", 0, 14)); // NOI18N
         Heading_2.setForeground(new java.awt.Color(0, 113, 77));
         Heading_2.setText("Berbagi Pangan, Berbagi Harapan");
-        getContentPane().add(Heading_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+        getContentPane().add(Heading_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
         labelNama.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelNama.setForeground(new java.awt.Color(142, 142, 147));
         labelNama.setText("Nama");
         getContentPane().add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
 
-        comboTypeAccount.setBackground(new java.awt.Color(255, 255, 255));
         comboTypeAccount.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
-        comboTypeAccount.setForeground(new java.awt.Color(0, 0, 0));
-        comboTypeAccount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Donatur", "Penerima", "Admin" }));
+        comboTypeAccount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Donatur", "Penerima" }));
         comboTypeAccount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         comboTypeAccount.setPreferredSize(new java.awt.Dimension(272, 44));
         getContentPane().add(comboTypeAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 272, 44));
@@ -77,13 +75,11 @@ public class register extends javax.swing.JFrame {
         labelTypeAccount.setText("Tipe Akun");
         getContentPane().add(labelTypeAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
-        fieldNama.setBackground(new java.awt.Color(255, 255, 255));
         fieldNama.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         fieldNama.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         fieldNama.setPreferredSize(new java.awt.Dimension(272, 44));
         getContentPane().add(fieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
-        fieldEmail.setBackground(new java.awt.Color(255, 255, 255));
         fieldEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         fieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         fieldEmail.setPreferredSize(new java.awt.Dimension(272, 44));
@@ -99,7 +95,6 @@ public class register extends javax.swing.JFrame {
         labelPassword.setText("Password");
         getContentPane().add(labelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
-        fieldPassword.setBackground(new java.awt.Color(255, 255, 255));
         fieldPassword.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         fieldPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         fieldPassword.setPreferredSize(new java.awt.Dimension(272, 44));

@@ -106,7 +106,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
 
             // 3. Cek jika daftar donasi KOSONG
             if (donationList.isEmpty()) {
-                // ... (kode 'Kamu belum memiliki donasi' - biarkan apa adanya) ...
+                // Tampilkan pesan kosong
                 donationListPanel.setLayout(new BorderLayout());
                 JLabel emptyLabel = new JLabel("Kamu belum memiliki donasi.");
                 emptyLabel.setFont(new Font("Lufga", Font.ITALIC, 12));
@@ -127,7 +127,6 @@ public class DashboardDonatur extends javax.swing.JFrame {
 
                     // === 4. LAYOUT CARD (Tumpuk ke Bawah) ===
                     JPanel card = new JPanel();
-                    // Layout card utama: menumpuk ke bawah
                     card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
                     card.setBackground(Color.WHITE);
                     
@@ -137,17 +136,16 @@ public class DashboardDonatur extends javax.swing.JFrame {
                         BorderFactory.createEmptyBorder(10, 10, 5, 10) // Padding
                     ));
                     
-                    // Atur ukuran card (lebar maks, tinggi otomatis)
+                    // Atur ukuran card
                     int panelWidth = donationScrollPane.getWidth();
                     if (panelWidth <= 40) panelWidth = 400; 
                     card.setMaximumSize(new Dimension(panelWidth - 20, Short.MAX_VALUE));
-                    card.setMinimumSize(new Dimension(panelWidth - 20, 60)); // Tinggi minimum
+                    card.setMinimumSize(new Dimension(panelWidth - 20, 60)); 
 
                     // 5. BUAT PANEL TEKS (Bagian ATAS)
                     JPanel infoPanel = new JPanel();
-                    infoPanel.setOpaque(false); // Transparan
+                    infoPanel.setOpaque(false); 
                     infoPanel.setLayout(new javax.swing.BoxLayout(infoPanel, javax.swing.BoxLayout.Y_AXIS));
-                    // Ratakan panel ini ke kiri
                     infoPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
                     
                     JLabel lblFoodName = new JLabel(foodName);
@@ -156,35 +154,52 @@ public class DashboardDonatur extends javax.swing.JFrame {
                     lblDetails.setFont(new Font("Lufga", Font.PLAIN, 12));
 
                     infoPanel.add(lblFoodName);
-                    infoPanel.add(Box.createVerticalStrut(5)); // Jarak kecil antara teks
+                    infoPanel.add(Box.createVerticalStrut(5)); 
                     infoPanel.add(lblDetails);
                     
                     // 6. BUAT PANEL TOMBOL (Bagian BAWAH)
                     JPanel buttonPanel = new JPanel();
-                    buttonPanel.setOpaque(false); // Transparan
-                    // Layout: FlowLayout agar tombol bisa rata kanan
-                    buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); // Rata kanan, tanpa spasi
-                    // Ratakan panel ini ke kiri (agar lebarnya sama)
+                    buttonPanel.setOpaque(false); 
+                    // Rata kanan agar rapi
+                    buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
                     buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
 
+                    // --- TOMBOL-TOMBOL ---
+                    JButton btnDetail = new JButton("Detail"); // TOMBOL BARU
                     JButton btnEdit = new JButton("Edit");
                     JButton btnHapus = new JButton("Hapus");
 
-                    // 7. WARNA TOMBOL
-                    btnEdit.setBackground(new Color(0, 175, 119)); // Hijau
-                    btnEdit.setForeground(Color.WHITE);
-                    btnEdit.setFont(new Font("Lufga", Font.BOLD, 12));
-
-                    btnHapus.setBackground(new Color(220, 53, 69)); // Merah
-                    btnHapus.setForeground(Color.WHITE);
-                    btnHapus.setFont(new Font("Lufga", Font.BOLD, 12));
+                    // 7. WARNA & STYLE TOMBOL
                     
-                    // Tambahkan tombol ke panel tombol
-                    buttonPanel.add(btnEdit);
-                    buttonPanel.add(Box.createHorizontalStrut(5)); // Jarak antar tombol
-                    buttonPanel.add(btnHapus);
+                    // Style Tombol Detail (Biru Muda / Abu Terang)
+                    btnDetail.setBackground(new Color(240, 240, 240)); 
+                    btnDetail.setForeground(Color.BLACK);
+                    btnDetail.setFont(new Font("Lufga", Font.BOLD, 11));
+                    
+                    // Style Tombol Edit (Hijau)
+                    btnEdit.setBackground(new Color(0, 175, 119)); 
+                    btnEdit.setForeground(Color.WHITE);
+                    btnEdit.setFont(new Font("Lufga", Font.BOLD, 11));
 
-                    // 8. IMPLEMENTASI TOMBOL HAPUS & EDIT (Biarkan apa adanya)
+                    // Style Tombol Hapus (Merah)
+                    btnHapus.setBackground(new Color(220, 53, 69)); 
+                    btnHapus.setForeground(Color.WHITE);
+                    btnHapus.setFont(new Font("Lufga", Font.BOLD, 11));
+                    
+                    // --- LOGIKA TOMBOL ---
+
+                    // 1. Logika Detail (Membuka Frame DetailDonasi)
+                    btnDetail.addActionListener(e -> {
+                        // Pastikan kamu sudah punya file DetailDonasi.java
+                        new DetailDonasi(donationId).setVisible(true);
+                    });
+
+                    // 2. Logika Edit
+                    btnEdit.addActionListener(e -> {
+                        new FormDonatur(DashboardDonatur.this, donationId).setVisible(true);
+                    });
+
+                    // 3. Logika Hapus
                     btnHapus.addActionListener(e -> {
                         int Pilihan = JOptionPane.showConfirmDialog(this,
                                 "Yakin ingin hapus donasi '" + foodName + "'?",
@@ -199,14 +214,17 @@ public class DashboardDonatur extends javax.swing.JFrame {
                                     JOptionPane.showMessageDialog(this, "Gagal menghapus donasi (Mungkin statusnya 'RESERVED'?).");
                                 }
                             } catch (Exception ex) {
-                                JOptionPane.showMessageDialog(this, "Gagal menghapus donasi: " + ex.getMessage());
+                                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
                             }
                         }
                     });
                     
-                    btnEdit.addActionListener(e -> {
-                        new FormDonatur(DashboardDonatur.this, donationId).setVisible(true);
-                    });
+                    // Masukkan tombol ke panel (Urutan: Detail -> Edit -> Hapus)
+                    buttonPanel.add(btnDetail);
+                    buttonPanel.add(Box.createHorizontalStrut(5)); // Jarak antar tombol
+                    buttonPanel.add(btnEdit);
+                    buttonPanel.add(Box.createHorizontalStrut(5)); 
+                    buttonPanel.add(btnHapus);
 
                     // 9. MASUKKAN PANEL-PANEL KE CARD
                     card.add(infoPanel); // Teks di atas
@@ -236,6 +254,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
         dahboard = new java.awt.Panel();
         Heading = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
         bg_dashboard = new javax.swing.JLabel();
         card_role = new java.awt.Panel();
         labelGreeting = new javax.swing.JLabel();
@@ -271,6 +290,16 @@ public class DashboardDonatur extends javax.swing.JFrame {
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo_kicik.png"))); // NOI18N
         dahboard.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logout.png"))); // NOI18N
+        logout.setText("jLabel1");
+        logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+        });
+        dahboard.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 30, 30));
 
         bg_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/bg_dashboard.jpg"))); // NOI18N
         dahboard.add(bg_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 64));
@@ -452,6 +481,27 @@ public class DashboardDonatur extends javax.swing.JFrame {
         FormDonatur formDonasi = new FormDonatur(this);
         formDonasi.setVisible(true);
     }//GEN-LAST:event_btnTambahDonasiActionPerformed
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        // 1. Tampilkan konfirmasi biar gak kepencet
+        int response = JOptionPane.showConfirmDialog(this, 
+                "Apakah Anda yakin ingin keluar?", 
+                "Konfirmasi Logout", 
+                JOptionPane.YES_NO_OPTION);
+        
+        // 2. Jika user pilih "Yes"
+        if (response == JOptionPane.YES_OPTION) {
+            
+            // A. Hapus sesi user yang tersimpan (PENTING!)
+            sumbangbang.SumbangBang.loggedInUser = null;
+            
+            // B. Buka kembali halaman Login
+            new login().setVisible(true);
+            
+            // C. Tutup dashboard saat ini
+            this.dispose();
+        }
+    }//GEN-LAST:event_logoutMouseClicked
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -491,6 +541,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
     private javax.swing.JLabel labelTextDonasi;
     private javax.swing.JLabel labelTextPorsi;
     private javax.swing.JLabel labelTextReservasi;
+    private javax.swing.JLabel logout;
     private java.awt.Panel panel1;
     private java.awt.Panel panelDonasi;
     private java.awt.Panel panelPorsi;

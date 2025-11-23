@@ -183,4 +183,114 @@ public class DonationDAO {
     }
     return donation;
 }
+    
+    public List<FoodDonation> searchDonations(String keyword) {
+        List<FoodDonation> list = new ArrayList<>();
+        
+        // Query SQL menggunakan LIKE %...% untuk pencarian mirip
+        String sql = "SELECT fd.*, u.name as donor_name FROM food_donations fd " +
+                     "JOIN users u ON fd.donor_id = u.user_id " +
+                     "WHERE fd.status = 'AVAILABLE' AND fd.expiry_date >= CURDATE() " +
+                     "AND (fd.food_name LIKE ? OR u.name LIKE ?) " + 
+                     "ORDER BY fd.created_at DESC";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            String searchKey = "%" + keyword + "%"; // Tambahkan % di kiri kanan
+            stmt.setString(1, searchKey);
+            stmt.setString(2, searchKey);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToDonation(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    // Return: Kode Pickup (jika sukses) atau NULL (jika gagal)
+    public String bookDonation(String donationId, String recipientId, int quantityTaken) {
+        String sql = "{CALL sp_create_reservation(?, ?, ?, ?, ?, ?)}";
+        
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            // Input
+            stmt.setString(1, donationId);
+            stmt.setString(2, recipientId);
+            stmt.setInt(3, quantityTaken);
+            
+            // Output
+            stmt.registerOutParameter(4, Types.VARCHAR); // p_reservation_id
+            stmt.registerOutParameter(5, Types.VARCHAR); // p_pickup_code
+            stmt.registerOutParameter(6, Types.VARCHAR); // p_status_message
+            
+            stmt.execute();
+            
+            String statusMessage = stmt.getString(6);
+            
+            if ("SUCCESS".equalsIgnoreCase(statusMessage)) {
+                String pickupCode = stmt.getString(5);
+                System.out.println("✅ Booking Success! Code: " + pickupCode);
+                return pickupCode; // KEMBALIKAN KODE UNIK
+            } else {
+                System.err.println("❌ Booking Failed: " + statusMessage);
+                return null; // Gagal
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error booking donation: " + e.getMessage());
+            return null;
+        }
+    }
+    // --- BAGIAN KOMENTAR ---
+
+    // 1. Ambil Data Reservasi berdasarkan Kode Pickup (Untuk form komentar)
+    // Return array string: [reservation_id, donor_id, food_name]
+    public String[] getReservationDetailByCode(String pickupCode) {
+        String sql = "SELECT r.reservation_id, fd.donor_id, fd.food_name " +
+                     "FROM reservations r " +
+                     "JOIN food_donations fd ON r.donation_id = fd.donation_id " +
+                     "WHERE r.pickup_code = ?";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, pickupCode);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return new String[] {
+                    rs.getString("reservation_id"),
+                    rs.getString("donor_id"),
+                    rs.getString("food_name")
+                };
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Tidak ketemu
+    }
+
+    // 2. Simpan Komentar Baru
+    public boolean insertComment(String resId, String recipientId, String donorId, String text, int rating) {
+        // Generate ID Komentar (COMxxx)
+        String commentId = "COM" + System.currentTimeMillis(); // Cara cepat generate ID unik
+        
+        // Atau gunakan logic generateId() kalau mau urut (bisa copas dari AdminDAO kalau perlu)
+        // Disini kita pakai timestamp biar praktis & unik
+        
+        String sql = "INSERT INTO comments (comment_id, reservation_id, recipient_id, donor_id, comment_text, rating) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, commentId);
+            stmt.setString(2, resId);
+            stmt.setString(3, recipientId);
+            stmt.setString(4, donorId);
+            stmt.setString(5, text);
+            stmt.setInt(6, rating);
+            
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error inserting comment: " + e.getMessage());
+            return false;
+        }
+    }
 }

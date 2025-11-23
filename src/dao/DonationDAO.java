@@ -183,4 +183,29 @@ public class DonationDAO {
     }
     return donation;
 }
+    
+    public List<FoodDonation> searchDonations(String keyword) {
+        List<FoodDonation> list = new ArrayList<>();
+        
+        // Query SQL menggunakan LIKE %...% untuk pencarian mirip
+        String sql = "SELECT fd.*, u.name as donor_name FROM food_donations fd " +
+                     "JOIN users u ON fd.donor_id = u.user_id " +
+                     "WHERE fd.status = 'AVAILABLE' AND fd.expiry_date >= CURDATE() " +
+                     "AND (fd.food_name LIKE ? OR u.name LIKE ?) " + 
+                     "ORDER BY fd.created_at DESC";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            String searchKey = "%" + keyword + "%"; // Tambahkan % di kiri kanan
+            stmt.setString(1, searchKey);
+            stmt.setString(2, searchKey);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToDonation(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

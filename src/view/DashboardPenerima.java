@@ -51,7 +51,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     loadAvailableDonations();
 }
-    private void loadAvailableDonations() {
+    void loadAvailableDonations() {
         List<FoodDonation> list = donationDAO.getAvailableDonations();
         
         // Tampilkan datanya
@@ -145,7 +145,8 @@ public class DashboardPenerima extends javax.swing.JFrame {
                 btnBooking.addActionListener(e -> {
                     // JANGAN PANGGIL DATABASE DI SINI!
                     // Cukup buka Form Konfirmasi dan kirim datanya
-                    new FormKonfirmasi(DashboardPenerima.this, donation).setVisible(true);
+                    // Tambahkan 'currentUser' di parameter kedua
+                    new KonfirmasiBooking(DashboardPenerima.this, currentUser, donation).setVisible(true);
                 });
                 
                 // Margin tipis (biar tidak gembung)
@@ -154,9 +155,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
                 // Ukuran Pas (Lebar 90, Tinggi 30) -> Biar tulisan "Booking" muat
                 btnBooking.setPreferredSize(new Dimension(70, 30));
                 
-                btnBooking.addActionListener(e -> {
-                    new FormKonfirmasi(DashboardPenerima.this, donation).setVisible(true);
-                });
+            
                 
                 // Wrapper agar ukuran tombol terjaga
                 JPanel btnWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
@@ -274,7 +273,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
         inputCari.setBackground(new java.awt.Color(255, 255, 255));
         inputCari.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         inputCari.setForeground(new java.awt.Color(0, 0, 0));
-        inputCari.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inputCari.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         inputCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         inputCari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +292,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
         donationListPanel.setLayout(donationListPanelLayout);
         donationListPanelLayout.setHorizontalGroup(
             donationListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 268, Short.MAX_VALUE)
+            .addGap(0, 290, Short.MAX_VALUE)
         );
         donationListPanelLayout.setVerticalGroup(
             donationListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +301,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
 
         donationScrollPane.setViewportView(donationListPanel);
 
-        getContentPane().add(donationScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 280, 340));
+        getContentPane().add(donationScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 300, 340));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
         bg.setText("jLabel2");

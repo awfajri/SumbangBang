@@ -208,18 +208,18 @@ public class DonationDAO {
         }
         return list;
     }
-    // --- UPDATE: BOOKING DENGAN JUMLAH (PARTIAL BOOKING) ---
-    // --- UPDATE: BOOKING DENGAN JUMLAH (PARTIAL BOOKING) ---
-    public boolean bookDonation(String donationId, String recipientId, int quantityTaken) {
+    
+    // Return: Kode Pickup (jika sukses) atau NULL (jika gagal)
+    public String bookDonation(String donationId, String recipientId, int quantityTaken) {
         String sql = "{CALL sp_create_reservation(?, ?, ?, ?, ?, ?)}";
         
         try (CallableStatement stmt = conn.prepareCall(sql)) {
-            // Input Parameters
+            // Input
             stmt.setString(1, donationId);
             stmt.setString(2, recipientId);
-            stmt.setInt(3, quantityTaken); // Kirim jumlah yang mau diambil
+            stmt.setInt(3, quantityTaken);
             
-            // Output Parameters
+            // Output
             stmt.registerOutParameter(4, Types.VARCHAR); // p_reservation_id
             stmt.registerOutParameter(5, Types.VARCHAR); // p_pickup_code
             stmt.registerOutParameter(6, Types.VARCHAR); // p_status_message
@@ -231,15 +231,15 @@ public class DonationDAO {
             if ("SUCCESS".equalsIgnoreCase(statusMessage)) {
                 String pickupCode = stmt.getString(5);
                 System.out.println("✅ Booking Success! Code: " + pickupCode);
-                return true;
+                return pickupCode; // KEMBALIKAN KODE UNIK
             } else {
                 System.err.println("❌ Booking Failed: " + statusMessage);
-                return false;
+                return null; // Gagal
             }
             
         } catch (SQLException e) {
             System.err.println("Error booking donation: " + e.getMessage());
-            return false;
+            return null;
         }
     }
 }

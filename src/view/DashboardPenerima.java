@@ -51,6 +51,20 @@ public class DashboardPenerima extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     loadAvailableDonations();
 }
+    // --- TAMBAHKAN INI DI DashboardPenerima.java ---
+
+    // Constructor Utama (Menerima User)
+    public DashboardPenerima(User user) {
+        initComponents();
+        this.currentUser = user; // Simpan user yang login
+        this.donationDAO = new dao.DonationDAO();
+        
+        // Panggil fungsi load data
+        loadAvailableDonations();
+        
+        // Opsional: Set nama user di header jika ada labelnya
+        // if (user != null) lblWelcome.setText("Hai, " + user.getName());
+    }
     void loadAvailableDonations() {
         List<FoodDonation> list = donationDAO.getAvailableDonations();
         
@@ -215,6 +229,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
         dahboard = new java.awt.Panel();
         Heading = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
         bg_dashboard = new javax.swing.JLabel();
         labelRole1 = new javax.swing.JLabel();
         labelRole2 = new javax.swing.JLabel();
@@ -239,6 +254,16 @@ public class DashboardPenerima extends javax.swing.JFrame {
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo_kicik.png"))); // NOI18N
         dahboard.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logout.png"))); // NOI18N
+        logout.setText("jLabel1");
+        logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+        });
+        dahboard.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 30, 30));
 
         bg_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/bg_dashboard.jpg"))); // NOI18N
         dahboard.add(bg_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 64));
@@ -333,6 +358,27 @@ public class DashboardPenerima extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputCariActionPerformed
 
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        // 1. Tampilkan konfirmasi biar gak kepencet
+        int response = JOptionPane.showConfirmDialog(this,
+            "Apakah Anda yakin ingin keluar?",
+            "Konfirmasi Logout",
+            JOptionPane.YES_NO_OPTION);
+
+        // 2. Jika user pilih "Yes"
+        if (response == JOptionPane.YES_OPTION) {
+
+            // A. Hapus sesi user yang tersimpan (PENTING!)
+            sumbangbang.SumbangBang.loggedInUser = null;
+
+            // B. Buka kembali halaman Login
+            new login().setVisible(true);
+
+            // C. Tutup dashboard saat ini
+            this.dispose();
+        }
+    }//GEN-LAST:event_logoutMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -371,5 +417,6 @@ public class DashboardPenerima extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel labelRole1;
     private javax.swing.JLabel labelRole2;
+    private javax.swing.JLabel logout;
     // End of variables declaration//GEN-END:variables
 }

@@ -217,21 +217,24 @@ public class KonfirmasiBooking extends javax.swing.JFrame{
             }
             
             // 4. Eksekusi Booking ke Database
-            boolean success = donationDAO.bookDonation(
+            // Di dalam btnKonfirmasiActionPerformed...
+
+            // 4. Eksekusi Booking (Sekarang mengembalikan String)
+            String pickupCode = donationDAO.bookDonation(
                 donation.getDonationId(), 
                 recipient.getUserId(), 
                 qtyTaken
             );
-            
-            if (success) {
-                JOptionPane.showMessageDialog(this, "Booking Berhasil! \nSilakan ambil makanan di lokasi.");
-                
-                // Refresh Dashboard Utama agar stok berkurang/hilang
-                if (dashboard != null) {
-                    dashboard.loadAvailableDonations();
-                }
-                
-                this.dispose(); // Tutup form ini
+
+            // Cek apakah kode berhasil didapat (tidak null)
+            if (pickupCode != null) {
+                // Tutup form konfirmasi & dashboard lama
+                this.dispose();
+                if (dashboard != null) dashboard.dispose(); 
+
+                // Buka Halaman Sukses dengan Kode Pickup
+                new BookingBerhasil(recipient, pickupCode).setVisible(true);
+
             } else {
                 JOptionPane.showMessageDialog(this, "Gagal Booking. Silakan coba lagi.", "Error", JOptionPane.ERROR_MESSAGE);
             }

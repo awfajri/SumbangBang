@@ -242,4 +242,55 @@ public class DonationDAO {
             return null;
         }
     }
+    // --- BAGIAN KOMENTAR ---
+
+    // 1. Ambil Data Reservasi berdasarkan Kode Pickup (Untuk form komentar)
+    // Return array string: [reservation_id, donor_id, food_name]
+    public String[] getReservationDetailByCode(String pickupCode) {
+        String sql = "SELECT r.reservation_id, fd.donor_id, fd.food_name " +
+                     "FROM reservations r " +
+                     "JOIN food_donations fd ON r.donation_id = fd.donation_id " +
+                     "WHERE r.pickup_code = ?";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, pickupCode);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return new String[] {
+                    rs.getString("reservation_id"),
+                    rs.getString("donor_id"),
+                    rs.getString("food_name")
+                };
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Tidak ketemu
+    }
+
+    // 2. Simpan Komentar Baru
+    public boolean insertComment(String resId, String recipientId, String donorId, String text, int rating) {
+        // Generate ID Komentar (COMxxx)
+        String commentId = "COM" + System.currentTimeMillis(); // Cara cepat generate ID unik
+        
+        // Atau gunakan logic generateId() kalau mau urut (bisa copas dari AdminDAO kalau perlu)
+        // Disini kita pakai timestamp biar praktis & unik
+        
+        String sql = "INSERT INTO comments (comment_id, reservation_id, recipient_id, donor_id, comment_text, rating) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, commentId);
+            stmt.setString(2, resId);
+            stmt.setString(3, recipientId);
+            stmt.setString(4, donorId);
+            stmt.setString(5, text);
+            stmt.setInt(6, rating);
+            
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error inserting comment: " + e.getMessage());
+            return false;
+        }
+    }
 }

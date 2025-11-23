@@ -111,12 +111,15 @@ public class KonfirmasiBooking extends javax.swing.JFrame{
         textInfoName.setBackground(new java.awt.Color(255, 255, 255));
         textInfoName.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         textInfoName.setForeground(new java.awt.Color(0, 102, 102));
+        textInfoName.setText("   ");
         textInfoName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         textInfoName.setPreferredSize(new java.awt.Dimension(272, 44));
         getContentPane().add(textInfoName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         txtInfoLocation.setBackground(new java.awt.Color(255, 255, 255));
         txtInfoLocation.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        txtInfoLocation.setForeground(new java.awt.Color(0, 102, 102));
+        txtInfoLocation.setText("   ");
         txtInfoLocation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         txtInfoLocation.setPreferredSize(new java.awt.Dimension(272, 44));
         getContentPane().add(txtInfoLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
@@ -144,6 +147,7 @@ public class KonfirmasiBooking extends javax.swing.JFrame{
         getContentPane().add(btnBatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 272, 41));
 
         txtInfoExp.setBackground(new java.awt.Color(255, 255, 255));
+        txtInfoExp.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         txtInfoExp.setForeground(new java.awt.Color(0, 102, 102));
         txtInfoExp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtInfoExp.setCaretColor(new java.awt.Color(224, 224, 224));
@@ -156,7 +160,9 @@ public class KonfirmasiBooking extends javax.swing.JFrame{
         getContentPane().add(labelQTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
         txtInputQty.setBackground(new java.awt.Color(255, 255, 255));
+        txtInputQty.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         txtInputQty.setForeground(new java.awt.Color(0, 102, 102));
+        txtInputQty.setText("   ");
         txtInputQty.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtInputQty.setCaretColor(new java.awt.Color(224, 224, 224));
         txtInputQty.setPreferredSize(new java.awt.Dimension(272, 44));
@@ -165,7 +171,7 @@ public class KonfirmasiBooking extends javax.swing.JFrame{
         lblStok.setFont(new java.awt.Font("Lufga", 1, 14)); // NOI18N
         lblStok.setForeground(new java.awt.Color(0, 102, 102));
         lblStok.setText("Sisa: ...");
-        getContentPane().add(lblStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, -1, -1));
+        getContentPane().add(lblStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, -1, -1));
 
         btnKonfirmasi.setBackground(new java.awt.Color(0, 175, 119));
         btnKonfirmasi.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N

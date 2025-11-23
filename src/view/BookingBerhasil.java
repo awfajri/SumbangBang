@@ -8,6 +8,7 @@ import model.User;
 
 public class BookingBerhasil extends javax.swing.JFrame {
     private User currentUser;
+    private String currentPickupCode;
 
     // Constructor Default (Hanya untuk preview)
     public BookingBerhasil() {
@@ -17,6 +18,7 @@ public class BookingBerhasil extends javax.swing.JFrame {
     public BookingBerhasil(User user, String pickupCode) {
         initComponents();
         this.currentUser = user;
+        this.currentPickupCode = pickupCode;
         
         // Tampilkan Kode Pickup yang didapat dari Database
         lblPickupCode.setText(pickupCode);
@@ -49,6 +51,7 @@ public class BookingBerhasil extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dahboard.setPreferredSize(new java.awt.Dimension(320, 64));
@@ -106,9 +109,9 @@ public class BookingBerhasil extends javax.swing.JFrame {
 
         getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 270, 180));
 
-        btnComment.setBackground(new java.awt.Color(204, 204, 204));
+        btnComment.setBackground(new java.awt.Color(0, 175, 119));
         btnComment.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
-        btnComment.setForeground(new java.awt.Color(0, 102, 102));
+        btnComment.setForeground(new java.awt.Color(255, 255, 255));
         btnComment.setText("Beri Komentar");
         btnComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
         btnComment.addActionListener(new java.awt.event.ActionListener() {
@@ -116,11 +119,11 @@ public class BookingBerhasil extends javax.swing.JFrame {
                 btnCommentActionPerformed(evt);
             }
         });
-        getContentPane().add(btnComment, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 272, 41));
+        getContentPane().add(btnComment, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 272, 41));
 
-        btnHome.setBackground(new java.awt.Color(0, 175, 119));
+        btnHome.setBackground(new java.awt.Color(255, 255, 255));
         btnHome.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
-        btnHome.setForeground(new java.awt.Color(255, 255, 255));
+        btnHome.setForeground(new java.awt.Color(0, 102, 102));
         btnHome.setText("Ke Beranda");
         btnHome.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(224, 224, 224), 1, true));
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +131,7 @@ public class BookingBerhasil extends javax.swing.JFrame {
                 btnHomeActionPerformed(evt);
             }
         });
-        getContentPane().add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 272, 41));
+        getContentPane().add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 272, 41));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
         bg.setText("jLabel2");
@@ -139,7 +142,12 @@ public class BookingBerhasil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommentActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this, "Fitur Komentar akan segera hadir!");
+        if (currentPickupCode != null && !currentPickupCode.isEmpty()) {
+            new FormKomentar(currentUser, currentPickupCode).setVisible(true);
+            this.dispose();
+        } else {
+            System.out.println("Error: Kode Pickup Kosong!");
+        }
     }//GEN-LAST:event_btnCommentActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed

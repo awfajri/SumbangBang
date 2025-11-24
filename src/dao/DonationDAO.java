@@ -293,4 +293,41 @@ public class DonationDAO {
             return false;
         }
     }
+    // ==========================================
+    // BAGIAN STATISTIK DONATUR (Hilang saat Merge)
+    // ==========================================
+
+    // 1. Hitung Total Donasi Saya
+    public int getTotalDonationsByDonor(String donorId) {
+        String sql = "SELECT COUNT(*) AS total FROM food_donations WHERE donor_id = ?";
+        return getCountByDonor(sql, donorId);
+    }
+
+    // 2. Hitung Total Porsi Saya
+    public int getTotalPortionsByDonor(String donorId) {
+        String sql = "SELECT SUM(quantity) AS total FROM food_donations WHERE donor_id = ?";
+        return getCountByDonor(sql, donorId);
+    }
+
+    // 3. Hitung Total Reservasi Masuk (Donasi saya yang dibooking orang)
+    public int getTotalReservationsReceived(String donorId) {
+        String sql = "SELECT COUNT(*) AS total FROM reservations r " +
+                     "JOIN food_donations fd ON r.donation_id = fd.donation_id " +
+                     "WHERE fd.donor_id = ?";
+        return getCountByDonor(sql, donorId);
+    }
+
+    // Helper Method untuk Hitung
+    private int getCountByDonor(String sql, String donorId) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, donorId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

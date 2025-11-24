@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Downloads/SumbangBang/src/view/login.java</file>
-            <file>file:/C:/Downloads/SumbangBang/src/view/DashboardDonatur.java</file>
-            <file>file:/C:/Downloads/SumbangBang/src/view/DetailDonasi.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/dao/DonationDAO.java</file>
+            <file>file:/D:/program/NetBeansProject/SumbangBang/src/view/DetailDonasi.java</file>
         </group>
     </open-files>
 </project-private>

@@ -65,35 +65,26 @@ public class DashboardDonatur extends javax.swing.JFrame {
         loadDonationList();
     }
     private void loadStatistics() {
-    String sql = "SELECT total_donations, COALESCE(total_portions, 0) as total_portions " +
-                     "FROM view_donor_stats WHERE user_id = ?";
+        if (currentUser == null) return;
         
-        Connection conn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-
+        // Kita gunakan DonationDAO yang sudah punya query lengkap
+        String userId = currentUser.getUserId();
+        
         try {
-            conn = config.DatabaseConfig.getInstance().getConnection(); 
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, currentUser.getUserId());
-            rs = pst.executeQuery();
-
-            if (rs.next()) {
-                valueTotalDonasi.setText(rs.getString("total_donations"));
-                valueTotalPorsi.setText(rs.getString("total_portions"));
-                valueTotalReservasi.setText("0"); // Placeholder
-            }
+            // 1. Ambil data real dari Database via DAO
+            int totalDonasi = donationDAO.getTotalDonationsByDonor(userId);
+            int totalPorsi = donationDAO.getTotalPortionsByDonor(userId);
+            int totalReservasi = donationDAO.getTotalReservationsReceived(userId); // <-- Ini method ajaibnya
+            
+            // 2. Tampilkan ke UI (Text Field)
+            // Pastikan nama variabel (valueTotal...) sesuai dengan Design kamu
+            if (valueTotalDonasi != null) valueTotalDonasi.setText(String.valueOf(totalDonasi));
+            if (valueTotalPorsi != null) valueTotalPorsi.setText(String.valueOf(totalPorsi));
+            if (valueTotalReservasi != null) valueTotalReservasi.setText(String.valueOf(totalReservasi));
+            
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Gagal memuat statistik.");
-        } finally {
-            // TUTUP statement dan resultset, TAPI JANGAN KONEKSINYA
-            try {
-                if (rs != null) rs.close();
-                if (pst != null) pst.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal memuat statistik: " + e.getMessage());
         }
     }
     private void loadDonationList() {

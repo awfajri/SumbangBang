@@ -66,6 +66,7 @@ public class UserDAO {
                 if (role.equals("DONATUR")) {
                     Donatur donatur = new Donatur();
                     donatur.setUserId(rs.getString("user_id"));
+                    donatur.setRole("DONATUR");
                     donatur.setName(rs.getString("name"));
                     donatur.setEmail(rs.getString("email"));
                     donatur.setPassword(rs.getString("password"));
@@ -75,6 +76,7 @@ public class UserDAO {
                     return donatur;
                 } else if (role.equals("PENERIMA")) {
                     Penerima penerima = new Penerima();
+                    penerima.setRole("PENERIMA");
                     penerima.setUserId(rs.getString("user_id"));
                     penerima.setName(rs.getString("name"));
                     penerima.setEmail(rs.getString("email"));
@@ -85,6 +87,7 @@ public class UserDAO {
                     return penerima;
                 } else if (role.equals("ADMIN")) {
                     Admin admin = new Admin();
+                    admin.setRole("ADMIN");
                     admin.setUserId(rs.getString("user_id"));
                     admin.setName(rs.getString("name"));
                     admin.setEmail(rs.getString("email"));

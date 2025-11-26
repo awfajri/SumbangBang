@@ -525,9 +525,10 @@ public class DashboardPenerima extends javax.swing.JFrame {
 
     private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
         // TODO add your handling code here:
-        pnlSideMenu.setVisible(false);
-        // TODO: Buka halaman Profile
-        javax.swing.JOptionPane.showMessageDialog(this, "Fitur Profile akan segera hadir!");
+       pnlSideMenu.setVisible(false);
+        this.dispose();
+        
+        new UserProfile(currentUser).setVisible(true);
     }//GEN-LAST:event_menuProfileMouseClicked
 
     private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed

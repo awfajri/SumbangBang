@@ -173,6 +173,8 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 30, 30));
 
         scrollPaneUlasan.setBorder(null);
+        scrollPaneUlasan.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneUlasan.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         panelListUlasan.setBackground(new java.awt.Color(255, 255, 255));
 

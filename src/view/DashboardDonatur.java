@@ -52,9 +52,19 @@ public class DashboardDonatur extends javax.swing.JFrame {
         // Jika user ada, muat semua data
         loadDashboardData();
     }
-
-    DashboardDonatur(User currentUser) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public DashboardDonatur(User user) { // Pastikan public
+        initComponents();
+        this.currentUser = user;
+        this.donationDAO = new DonationDAO();
+        
+        // Matikan Z-Order kalau bikin error, atau atur manual di Design
+        // getContentPane().setComponentZOrder(pnlSideMenu, 0); 
+        
+        pnlSideMenu.setVisible(false);
+        loadDashboardData();
+        loadStatistics();
+        loadDonationList(); // Load daftar donasi juga
     }
 
     public void loadDashboardData() {
@@ -77,7 +87,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
             // 1. Ambil data real dari Database via DAO
             int totalDonasi = donationDAO.getTotalDonationsByDonor(userId);
             int totalPorsi = donationDAO.getTotalPortionsByDonor(userId);
-            int totalReservasi = donationDAO.getTotalReservationsReceived(userId); // <-- Ini method ajaibnya
+            int totalReservasi = donationDAO.getTotalReservationsReceived(userId); 
             
             // 2. Tampilkan ke UI (Text Field)
             // Pastikan nama variabel (valueTotal...) sesuai dengan Design kamu
@@ -251,6 +261,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
         menuLogout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnCloseMenu = new javax.swing.JLabel();
+        menuProfile = new javax.swing.JButton();
         dahboard = new java.awt.Panel();
         Heading = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
@@ -341,6 +352,21 @@ public class DashboardDonatur extends javax.swing.JFrame {
             }
         });
 
+        menuProfile.setBackground(new java.awt.Color(255, 255, 255));
+        menuProfile.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        menuProfile.setForeground(new java.awt.Color(0, 102, 102));
+        menuProfile.setText("Profile");
+        menuProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuProfileMouseClicked(evt);
+            }
+        });
+        menuProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuProfileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlSideMenuLayout = new javax.swing.GroupLayout(pnlSideMenu);
         pnlSideMenu.setLayout(pnlSideMenuLayout);
         pnlSideMenuLayout.setHorizontalGroup(
@@ -355,7 +381,8 @@ public class DashboardDonatur extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCloseMenu)
-                        .addGap(13, 13, 13)))
+                        .addGap(13, 13, 13))
+                    .addComponent(menuProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlSideMenuLayout.setVerticalGroup(
@@ -369,7 +396,9 @@ public class DashboardDonatur extends javax.swing.JFrame {
                 .addComponent(menuBeranda, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menuKomentar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 360, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menuProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
                 .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -629,6 +658,20 @@ public class DashboardDonatur extends javax.swing.JFrame {
         // TODO add your handling code here:
         pnlSideMenu.setVisible(false);
     }//GEN-LAST:event_btnCloseMenuMouseClicked
+
+    private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuProfileMouseClicked
+
+    private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
+        // TODO add your handling code here:
+        // Tutup menu & dashboard
+        pnlSideMenu.setVisible(false); 
+        this.dispose();
+        
+        // Buka Profile
+        new UserProfile(currentUser).setVisible(true);
+    }//GEN-LAST:event_menuProfileActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -674,6 +717,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
     private javax.swing.JButton menuBeranda;
     public javax.swing.JButton menuKomentar;
     private javax.swing.JButton menuLogout;
+    public javax.swing.JButton menuProfile;
     private java.awt.Panel panel1;
     private java.awt.Panel panelDonasi;
     private java.awt.Panel panelPorsi;

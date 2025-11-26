@@ -173,6 +173,7 @@ public class ListKomentarSaya extends javax.swing.JFrame {
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 30, 30));
 
         scrollPane.setBorder(null);
+        scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         panelListUlasan.setBackground(new java.awt.Color(255, 255, 255));
 

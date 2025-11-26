@@ -496,10 +496,7 @@ public class DashboardPenerima extends javax.swing.JFrame {
     }//GEN-LAST:event_menuBerandaActionPerformed
 
     private void menuKomentarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuKomentarMouseClicked
-        // TODO add your handling code here:
-        pnlSideMenu.setVisible(false);
-        // TODO: Buka halaman List Komentar Saya
-        javax.swing.JOptionPane.showMessageDialog(this, "Fitur 'Komentar Saya' akan segera hadir!");
+        new ListKomentarSaya().setVisible(true);
     }//GEN-LAST:event_menuKomentarMouseClicked
 
     private void menuKomentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKomentarActionPerformed

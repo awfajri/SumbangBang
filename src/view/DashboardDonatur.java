@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-import view.ListKomentarDonatur;
 import dao.DonationDAO;
 import model.FoodDonation; // Dari DonationDAO kamu
 import model.User;
@@ -604,7 +603,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
     }//GEN-LAST:event_menuBerandaMouseClicked
 
     private void menuKomentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKomentarActionPerformed
-        // TODO add your handling code here:
+        new ListKomentarDonatur().setVisible(true);
     }//GEN-LAST:event_menuKomentarActionPerformed
 
     private void menuKomentarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuKomentarMouseClicked

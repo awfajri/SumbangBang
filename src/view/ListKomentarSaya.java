@@ -1,6 +1,7 @@
 package view;
 
-import dao.CommentDAO;
+import dao.SentCommentDAO;
+import java.awt.Component;
 import model.Comment;
 import model.User;
 import sumbangbang.SumbangBang;
@@ -17,130 +18,129 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class ListKomentarDonatur extends javax.swing.JFrame {
-    private User currentUser = SumbangBang.loggedInUser;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListKomentarDonatur.class.getName());
+public class ListKomentarSaya extends javax.swing.JFrame {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListKomentarSaya.class.getName());
     
-    // Style Warna & Font
+    private User currentUser = SumbangBang.loggedInUser;
+    
+    // Style Warna
     private final Color PRIMARY_COLOR = new Color(0, 175, 119);
     private final Color TEXT_DARK = new Color(33, 37, 41);
     private final Color TEXT_GRAY = new Color(108, 117, 125);
-    
-    public ListKomentarDonatur() {
+
+    public ListKomentarSaya() {
         initComponents();
         
-        setLocationRelativeTo(null);
+        // Setup Layout Panel List agar bisa menumpuk ke bawah
+        panelListUlasan.setLayout(new javax.swing.BoxLayout(panelListUlasan, javax.swing.BoxLayout.Y_AXIS));
         
-        // Load Data Ulasan
-        loadComments();
+        // Panggil logika untuk mengisi data
+        loadMyComments(); 
+        
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
-
-    private void loadComments() {
+    
+    private void loadMyComments() {
         // 1. Bersihkan panel
-        panelListUlasan.removeAll();
+        panelListUlasan.removeAll(); // Sesuaikan nama variabel panel kamu (panelListUlasan)
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-        CommentDAO dao = new CommentDAO();
+        dao.SentCommentDAO dao = new dao.SentCommentDAO();
         
-        // Ambil data dari database
-        List<Comment> list = dao.getCommentsByDonor(currentUser.getUserId());
+        // Ambil data
+        List<Comment> list = dao.getCommentsByRecipient(currentUser.getUserId());
 
-        // 2. Cek jika kosong
         if (list.isEmpty()) {
             panelListUlasan.setLayout(new BorderLayout());
-            JLabel emptyLabel = new JLabel("Belum ada ulasan masuk.");
+            JLabel emptyLabel = new JLabel("Belum ada ulasan yang dikirim.");
             emptyLabel.setFont(new Font("Lufga", Font.ITALIC, 14));
             emptyLabel.setForeground(Color.GRAY);
             emptyLabel.setHorizontalAlignment(SwingConstants.CENTER);
             panelListUlasan.add(emptyLabel, BorderLayout.CENTER);
             
         } else {
-            // 3. Jika ada isi, gunakan BoxLayout Y
+            // Gunakan BoxLayout Y agar kartu menumpuk ke bawah
             panelListUlasan.setLayout(new javax.swing.BoxLayout(panelListUlasan, javax.swing.BoxLayout.Y_AXIS));
 
             for (Comment c : list) {
-                
-                // === SETUP DATA ===
-                String recipient = c.getRecipientName();
+                // --- DATA ---
+                String toDonatur = "Ke: " + c.getRecipientName(); 
                 String food = "Menu: " + c.getFoodName();
-                String date = dateFormat.format(c.getDate());
-                String content = "<html><div style='width:220px'>" + c.getCommentText() + "</div></html>"; // Word wrap text
-                String ratingStr = "⭐".repeat(c.getRating()); // Ulangi icon bintang sesuai rating
+                String date = (c.getDate() != null) ? dateFormat.format(c.getDate()) : "-";
+                String content = "<html><div style='width:150px'>" + c.getCommentText() + "</div></html>"; 
+                String ratingStr = "⭐".repeat(c.getRating()); 
 
-                    // === SETUP CARD ===
-                    JPanel card = new JPanel(new BorderLayout()); // Hapus gap
-                    card.setBackground(Color.WHITE);
-
-                    // 1. HAPUS PADDING DI SINI (Cukup garis pinggir saja)
-                    card.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230), 1));
-
-                    // 2. BUAT STRIP HIJAU (KIRI)
-                    JPanel greenStrip = new JPanel();
-                    greenStrip.setBackground(PRIMARY_COLOR);
-                    greenStrip.setPreferredSize(new Dimension(10, 0)); // Lebar 10px
-
-                    // 3. BUAT PANEL KONTEN (TENGAH)
-                    // Panel ini yang akan menampung semua teks
-                    JPanel contentPanel = new JPanel();
-                    contentPanel.setLayout(new javax.swing.BoxLayout(contentPanel, javax.swing.BoxLayout.Y_AXIS));
-                    contentPanel.setBackground(Color.WHITE);
-
-                    // 4. PINDAHKAN PADDING KE SINI
-                    // Supaya teksnya rapi (tidak nempel ke garis hijau)
-                    contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
-
-                // === BAGIAN ATAS (Nama & Tanggal) ===
-                JPanel topPanel = new JPanel(new BorderLayout());
-                topPanel.setBackground(Color.WHITE);
+                // === SETUP CARD ===
+                JPanel card = new JPanel(new BorderLayout()); // Hapus gap
+                card.setBackground(Color.WHITE);
+                card.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230), 1));
                 
-                JLabel lblName = new JLabel(recipient);
-                lblName.setFont(new Font("Lufga", Font.BOLD, 14));
-                lblName.setForeground(TEXT_DARK);
+                int scrollWidth = scrollPane.getWidth();
+                if (scrollWidth <= 0) scrollWidth = 280;
+                
+                // 2. BUAT STRIP HIJAU (KIRI)
+                JPanel greenStrip = new JPanel();
+                greenStrip.setBackground(PRIMARY_COLOR);
+                greenStrip.setPreferredSize(new Dimension(10, 0)); // Lebar 10px
+
+                // 3. BUAT PANEL KONTEN (TENGAH)
+                // Panel ini yang akan menampung semua teks
+                JPanel contentPanel = new JPanel();
+                contentPanel.setLayout(new javax.swing.BoxLayout(contentPanel, javax.swing.BoxLayout.Y_AXIS));
+                contentPanel.setBackground(Color.WHITE);
+
+                contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
+
+                // -- Isi Konten --
+                JPanel headerInfo = new JPanel(new BorderLayout());
+                headerInfo.setBackground(Color.WHITE);
+                headerInfo.setMaximumSize(new Dimension(1000, 20)); 
+                
+                JLabel lblTo = new JLabel(toDonatur);
+                lblTo.setFont(new Font("Lufga", Font.BOLD, 13)); // Font agak diperkecil biar muat
+                lblTo.setForeground(TEXT_DARK);
                 
                 JLabel lblDate = new JLabel(date);
-                lblDate.setFont(new Font("Lufga", Font.PLAIN, 11));
+                lblDate.setFont(new Font("Lufga", Font.PLAIN, 10));
                 lblDate.setForeground(TEXT_GRAY);
                 
-                topPanel.add(lblName, BorderLayout.WEST);
-                topPanel.add(lblDate, BorderLayout.EAST);
-
-                // === BAGIAN TENGAH (Menu & Rating) ===
-                JPanel midPanel = new JPanel(new GridLayout(2, 1));
-                midPanel.setBackground(Color.WHITE);
-                midPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 10, 0)); // Jarak atas bawah
+                headerInfo.add(lblTo, BorderLayout.WEST);
+                headerInfo.add(lblDate, BorderLayout.EAST);
                 
+                headerInfo.setAlignmentX(Component.LEFT_ALIGNMENT);
                 JLabel lblFood = new JLabel(food);
                 lblFood.setFont(new Font("Lufga", Font.BOLD, 12));
                 lblFood.setForeground(PRIMARY_COLOR);
                 
                 JLabel lblRating = new JLabel(ratingStr);
-                lblRating.setForeground(new Color(255, 193, 7)); // Warna Kuning Emas
+                lblRating.setForeground(new Color(255, 193, 7)); 
                 
-                midPanel.add(lblFood);
-                midPanel.add(lblRating);
-
-                // === BAGIAN BAWAH (Isi Komentar) ===
                 JLabel lblContent = new JLabel(content);
-                lblContent.setFont(new Font("Lufga", Font.PLAIN, 13));
+                lblContent.setFont(new Font("Lufga", Font.PLAIN, 12));
                 lblContent.setForeground(new Color(80, 80, 80));
-
-                // === MASUKKAN TEKS KE CONTENT PANEL ===
-                // Masukkan bagian-bagian teks ke dalam 'contentPanel', bukan langsung ke 'card'
-                contentPanel.add(topPanel);
-                contentPanel.add(midPanel);
+                lblContent.setAlignmentX(Component.LEFT_ALIGNMENT);
+                
+                // Masukkan ke contentPanel
+                contentPanel.add(headerInfo);
+                contentPanel.add(Box.createVerticalStrut(5)); 
+                contentPanel.add(lblFood);
+                contentPanel.add(lblRating);
+                contentPanel.add(Box.createVerticalStrut(8)); 
                 contentPanel.add(lblContent);
 
-                // === GABUNGKAN KE KARTU UTAMA ===
-                card.add(greenStrip, BorderLayout.WEST);    // Strip hijau di kiri full tinggi
-                card.add(contentPanel, BorderLayout.CENTER); // Teks di tengah
+                // === 4. GABUNGKAN (Card Utama) ===
+                // Strip Hijau di Kiri (WEST), Konten di Tengah (CENTER)
+                card.add(greenStrip, BorderLayout.WEST);
+                card.add(contentPanel, BorderLayout.CENTER);
 
-                // Masukkan ke Panel Utama
+                // Masukkan ke List Panel Utama
                 panelListUlasan.add(card);
                 panelListUlasan.add(Box.createVerticalStrut(15)); // Jarak antar kartu
             }
         }
         
-        // Refresh UI
+        // Wajib refresh UI
         panelListUlasan.revalidate();
         panelListUlasan.repaint();
     }
@@ -151,7 +151,7 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
 
         Heading = new javax.swing.JLabel();
         btnBack = new javax.swing.JLabel();
-        scrollPaneUlasan = new javax.swing.JScrollPane();
+        scrollPane = new javax.swing.JScrollPane();
         panelListUlasan = new javax.swing.JPanel();
         bg = new javax.swing.JLabel();
 
@@ -160,7 +160,7 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
 
         Heading.setFont(new java.awt.Font("Lufga", 1, 22)); // NOI18N
         Heading.setForeground(new java.awt.Color(0, 136, 113));
-        Heading.setText("Ulasan Masuk");
+        Heading.setText("Ulasan Terkirim");
         getContentPane().add(Heading, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/back.png"))); // NOI18N
@@ -172,7 +172,7 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
         });
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 30, 30));
 
-        scrollPaneUlasan.setBorder(null);
+        scrollPane.setBorder(null);
 
         panelListUlasan.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -187,9 +187,9 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
             .addGap(0, 430, Short.MAX_VALUE)
         );
 
-        scrollPaneUlasan.setViewportView(panelListUlasan);
+        scrollPane.setViewportView(panelListUlasan);
 
-        getContentPane().add(scrollPaneUlasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 280, 430));
+        getContentPane().add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 280, 430));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
         bg.setText("jLabel2");
@@ -224,7 +224,7 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ListKomentarDonatur().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ListKomentarSaya().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -232,6 +232,6 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
     private javax.swing.JLabel bg;
     private javax.swing.JLabel btnBack;
     private javax.swing.JPanel panelListUlasan;
-    private javax.swing.JScrollPane scrollPaneUlasan;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 }

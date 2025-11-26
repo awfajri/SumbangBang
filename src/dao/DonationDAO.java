@@ -118,7 +118,7 @@ public class DonationDAO {
     
     // DELETE
     public boolean deleteDonation(String donationId) {
-        String sql = "DELETE FROM food_donations WHERE donation_id = ? AND status = 'AVAILABLE'";
+        String sql = "DELETE FROM food_donations WHERE donation_id = ?";
         
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, donationId);

@@ -1,29 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+
+import java.sql.Date;
 
 /**
  *
  * @author User
  */
-import java.sql.Timestamp;
-
 public class Comment {
     private String commentId;
     private String reservationId;
     private String recipientId;
-    private String recipientName; // For display
+    private String recipientName; // Untuk tampilan nama penerima
     private String donorId;
     private String foodName;
     private String commentText;
     private int rating; // 1-5
-    private Timestamp commentDate;
     
-    // Constructors
+    // Kita gunakan java.sql.Date agar kompatibel dengan DAO
+    private Date commentDate; 
+    
+    // Constructor Kosong
     public Comment() {}
     
+    // Constructor Lengkap
     public Comment(String commentId, String reservationId, String recipientId, 
                    String donorId, String commentText, int rating) {
         this.commentId = commentId;
@@ -32,44 +31,28 @@ public class Comment {
         this.donorId = donorId;
         this.commentText = commentText;
         this.rating = rating;
-        this.commentDate = new Timestamp(System.currentTimeMillis());
+        // Set default tanggal hari ini
+        this.commentDate = new Date(System.currentTimeMillis());
     }
     
-    // Business Methods
+    // --- Business Methods ---
+    
     public boolean validate() {
-        // Check if rating is between 1-5
+        // Cek rating 1-5
         if (rating < 1 || rating > 5) {
             System.out.println("❌ Invalid rating! Must be between 1-5.");
             return false;
         }
-        
-        // Check if comment text is not empty
+        // Cek komentar tidak kosong
         if (commentText == null || commentText.trim().isEmpty()) {
             System.out.println("❌ Comment text cannot be empty!");
             return false;
         }
-        
         return true;
     }
     
-    public String getDetails() {
-        return String.format("Comment by %s | Rating: %d/5 | Date: %s\n%s",
-                recipientName, rating, commentDate, commentText);
-    }
-    
-    public String getRatingStars() {
-        StringBuilder stars = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            if (i < rating) {
-                stars.append("⭐");
-            } else {
-                stars.append("☆");
-            }
-        }
-        return stars.toString();
-    }
-    
-    // Getters and Setters
+    // --- GETTERS AND SETTERS (SUDAH DIPERBAIKI) ---
+
     public String getFoodName() { return foodName; }
     public void setFoodName(String foodName) { this.foodName = foodName; }
     
@@ -94,8 +77,16 @@ public class Comment {
     public int getRating() { return rating; }
     public void setRating(int rating) { this.rating = rating; }
     
-    public Timestamp getCommentDate() { return commentDate; }
-    public void setCommentDate(Timestamp commentDate) { this.commentDate = commentDate; }
+    // GETTER DATE
+    public Date getDate() { 
+        return commentDate; 
+    }
+
+    // SETTER DATE (SUDAH BENAR)
+    // Tidak ada lagi 'throw exception'
+    public void setDate(Date date) {
+        this.commentDate = date;
+    }
     
     @Override
     public String toString() {

@@ -16,6 +16,7 @@ public class Comment {
     private String recipientId;
     private String recipientName; // For display
     private String donorId;
+    private String foodName;
     private String commentText;
     private int rating; // 1-5
     private Timestamp commentDate;
@@ -69,6 +70,9 @@ public class Comment {
     }
     
     // Getters and Setters
+    public String getFoodName() { return foodName; }
+    public void setFoodName(String foodName) { this.foodName = foodName; }
+    
     public String getCommentId() { return commentId; }
     public void setCommentId(String commentId) { this.commentId = commentId; }
     

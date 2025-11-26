@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+import view.ListKomentarDonatur;
 import dao.DonationDAO;
 import model.FoodDonation; // Dari DonationDAO kamu
 import model.User;
@@ -52,6 +52,10 @@ public class DashboardDonatur extends javax.swing.JFrame {
 
         // Jika user ada, muat semua data
         loadDashboardData();
+    }
+
+    DashboardDonatur(User currentUser) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void loadDashboardData() {
@@ -242,10 +246,16 @@ public class DashboardDonatur extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        pnlSideMenu = new java.awt.Panel();
+        menuBeranda = new javax.swing.JButton();
+        menuKomentar = new javax.swing.JButton();
+        menuLogout = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnCloseMenu = new javax.swing.JLabel();
         dahboard = new java.awt.Panel();
         Heading = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
-        logout = new javax.swing.JLabel();
+        btnMenu = new javax.swing.JLabel();
         bg_dashboard = new javax.swing.JLabel();
         card_role = new java.awt.Panel();
         labelGreeting = new javax.swing.JLabel();
@@ -271,6 +281,102 @@ public class DashboardDonatur extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        pnlSideMenu.setBackground(new java.awt.Color(0, 153, 102));
+        pnlSideMenu.setForeground(new java.awt.Color(255, 255, 255));
+        pnlSideMenu.setPreferredSize(new java.awt.Dimension(131, 82));
+        pnlSideMenu.setVisible(false);
+
+        menuBeranda.setBackground(new java.awt.Color(255, 255, 255));
+        menuBeranda.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        menuBeranda.setForeground(new java.awt.Color(0, 102, 102));
+        menuBeranda.setText("Beranda");
+        menuBeranda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuBerandaMouseClicked(evt);
+            }
+        });
+        menuBeranda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBerandaActionPerformed(evt);
+            }
+        });
+
+        menuKomentar.setBackground(new java.awt.Color(255, 255, 255));
+        menuKomentar.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        menuKomentar.setForeground(new java.awt.Color(0, 102, 102));
+        menuKomentar.setText("Ulasan Masuk");
+        menuKomentar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuKomentarMouseClicked(evt);
+            }
+        });
+        menuKomentar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuKomentarActionPerformed(evt);
+            }
+        });
+
+        menuLogout.setBackground(new java.awt.Color(204, 0, 0));
+        menuLogout.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        menuLogout.setForeground(new java.awt.Color(255, 255, 255));
+        menuLogout.setText("Keluar");
+        menuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuLogoutMouseClicked(evt);
+            }
+        });
+        menuLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLogoutActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Lufga", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Menu");
+
+        btnCloseMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Close.png"))); // NOI18N
+        btnCloseMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCloseMenuMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlSideMenuLayout = new javax.swing.GroupLayout(pnlSideMenu);
+        pnlSideMenu.setLayout(pnlSideMenuLayout);
+        pnlSideMenuLayout.setHorizontalGroup(
+            pnlSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSideMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menuKomentar, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(menuBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlSideMenuLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCloseMenu)
+                        .addGap(13, 13, 13)))
+                .addContainerGap())
+        );
+        pnlSideMenuLayout.setVerticalGroup(
+            pnlSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSideMenuLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(pnlSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnCloseMenu))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(menuBeranda, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menuKomentar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 360, Short.MAX_VALUE)
+                .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(pnlSideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 190, 570));
+
         dahboard.setPreferredSize(new java.awt.Dimension(320, 64));
         dahboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -282,15 +388,15 @@ public class DashboardDonatur extends javax.swing.JFrame {
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo_kicik.png"))); // NOI18N
         dahboard.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logout.png"))); // NOI18N
-        logout.setText("jLabel1");
-        logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Menu Hamburger.png"))); // NOI18N
+        btnMenu.setText("jLabel1");
+        btnMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
+                btnMenuMouseClicked(evt);
             }
         });
-        dahboard.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 30, 30));
+        dahboard.add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 30, 30));
 
         bg_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/bg_dashboard.jpg"))); // NOI18N
         dahboard.add(bg_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 64));
@@ -340,6 +446,11 @@ public class DashboardDonatur extends javax.swing.JFrame {
         valueTotalPorsi.setForeground(new java.awt.Color(255, 255, 255));
         valueTotalPorsi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         valueTotalPorsi.setBorder(null);
+        valueTotalPorsi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valueTotalPorsiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPorsiLayout = new javax.swing.GroupLayout(panelPorsi);
         panelPorsi.setLayout(panelPorsiLayout);
@@ -360,11 +471,11 @@ public class DashboardDonatur extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(labelTextPorsi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valueTotalPorsi, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(valueTotalPorsi, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel1.add(panelPorsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 270, -1));
+        panel1.add(panelPorsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 270, 80));
 
         panelReservasi.setBackground(new java.awt.Color(0, 113, 77));
         panelReservasi.setForeground(new java.awt.Color(255, 255, 255));
@@ -388,12 +499,12 @@ public class DashboardDonatur extends javax.swing.JFrame {
             .addGroup(panelReservasiLayout.createSequentialGroup()
                 .addGroup(panelReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelReservasiLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(labelTextReservasi))
-                    .addGroup(panelReservasiLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(valueTotalReservasi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
+                        .addComponent(valueTotalReservasi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelReservasiLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(labelTextReservasi)))
+                .addGap(76, 76, 76))
         );
         panelReservasiLayout.setVerticalGroup(
             panelReservasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,26 +584,52 @@ public class DashboardDonatur extends javax.swing.JFrame {
         formDonasi.setVisible(true);
     }//GEN-LAST:event_btnTambahDonasiActionPerformed
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        // 1. Tampilkan konfirmasi biar gak kepencet
-        int response = JOptionPane.showConfirmDialog(this, 
-                "Apakah Anda yakin ingin keluar?", 
-                "Konfirmasi Logout", 
-                JOptionPane.YES_NO_OPTION);
+    private void btnMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuMouseClicked
+        pnlSideMenu.setVisible(true);
+    }//GEN-LAST:event_btnMenuMouseClicked
+
+    private void valueTotalPorsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueTotalPorsiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_valueTotalPorsiActionPerformed
+
+    private void menuBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBerandaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuBerandaActionPerformed
+
+    private void menuBerandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBerandaMouseClicked
+        // TODO add your handling code here:
+        pnlSideMenu.setVisible(false);
+        loadStatistics(); // Refresh data statistik
         
-        // 2. Jika user pilih "Yes"
-        if (response == JOptionPane.YES_OPTION) {
+    }//GEN-LAST:event_menuBerandaMouseClicked
+
+    private void menuKomentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKomentarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuKomentarActionPerformed
+
+    private void menuKomentarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuKomentarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuKomentarMouseClicked
+
+    private void menuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuLogoutActionPerformed
+
+    private void menuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLogoutMouseClicked
+        // TODO add your handling code here:
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Yakin ingin keluar?", "Logout", javax.swing.JOptionPane.YES_NO_OPTION);
             
-            // A. Hapus sesi user yang tersimpan (PENTING!)
-            sumbangbang.SumbangBang.loggedInUser = null;
-            
-            // B. Buka kembali halaman Login
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             new login().setVisible(true);
-            
-            // C. Tutup dashboard saat ini
             this.dispose();
         }
-    }//GEN-LAST:event_logoutMouseClicked
+    }//GEN-LAST:event_menuLogoutMouseClicked
+
+    private void btnCloseMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMenuMouseClicked
+        // TODO add your handling code here:
+        pnlSideMenu.setVisible(false);
+    }//GEN-LAST:event_btnCloseMenuMouseClicked
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -520,11 +657,14 @@ public class DashboardDonatur extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel bg;
     private javax.swing.JLabel bg_dashboard;
+    private javax.swing.JLabel btnCloseMenu;
+    private javax.swing.JLabel btnMenu;
     private java.awt.Button btnTambahDonasi;
     private java.awt.Panel card_role;
     private java.awt.Panel dahboard;
     private javax.swing.JPanel donationListPanel;
     private javax.swing.JScrollPane donationScrollPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel labelGreeting;
     private javax.swing.JLabel labelRole1;
@@ -532,11 +672,14 @@ public class DashboardDonatur extends javax.swing.JFrame {
     private javax.swing.JLabel labelTextDonasi;
     private javax.swing.JLabel labelTextPorsi;
     private javax.swing.JLabel labelTextReservasi;
-    private javax.swing.JLabel logout;
+    private javax.swing.JButton menuBeranda;
+    public javax.swing.JButton menuKomentar;
+    private javax.swing.JButton menuLogout;
     private java.awt.Panel panel1;
     private java.awt.Panel panelDonasi;
     private java.awt.Panel panelPorsi;
     private java.awt.Panel panelReservasi;
+    private java.awt.Panel pnlSideMenu;
     private javax.swing.JTextField valueTotalDonasi;
     private javax.swing.JTextField valueTotalPorsi;
     private javax.swing.JTextField valueTotalReservasi;

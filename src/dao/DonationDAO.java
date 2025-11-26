@@ -8,6 +8,8 @@ package dao;
  *
  * @author User
  */
+import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
 import config.DatabaseConfig;
 import model.FoodDonation;
 import java.sql.*;

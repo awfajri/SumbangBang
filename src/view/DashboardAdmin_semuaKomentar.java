@@ -310,7 +310,6 @@ public class DashboardAdmin_semuaKomentar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         // 1. Cek Baris
         int selectedRow = tableAllComments.getSelectedRow();
         if (selectedRow == -1) {
@@ -319,34 +318,58 @@ public class DashboardAdmin_semuaKomentar extends javax.swing.JFrame {
         }
 
         // 2. Ambil Data Lama
+        // Kolom: 0=ID, 1=Penerima, 2=Donatur, 3=Rating(x/5), 4=Isi, 5=Tanggal
         String id = tableAllComments.getValueAt(selectedRow, 0).toString();
-
-        String currentRatingStr = tableAllComments.getValueAt(selectedRow, 3).toString().split("/")[0];
+        String currentRecipient = tableAllComments.getValueAt(selectedRow, 1).toString();
+        String currentRatingStr = tableAllComments.getValueAt(selectedRow, 3).toString().split("/")[0]; // Ambil angkanya aja
         String currentText = tableAllComments.getValueAt(selectedRow, 4).toString();
 
-        // 3. Input Dialog
-        String newText = javax.swing.JOptionPane.showInputDialog(this, "Edit Isi Komentar:", currentText);
-        if (newText == null || newText.isEmpty()) return;
+        // 3. BUAT FORM CUSTOM
+        javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.GridLayout(0, 1));
+        
+        // Info Penulis
+        javax.swing.JTextField txtInfo = new javax.swing.JTextField("Oleh: " + currentRecipient);
+        txtInfo.setEditable(false);
+        
+        // Edit Isi Komentar
+        javax.swing.JTextField txtComment = new javax.swing.JTextField(currentText);
+        
+        // Edit Rating (Dropdown 1-5)
+        String[] ratings = {"1", "2", "3", "4", "5"};
+        javax.swing.JComboBox<String> cmbRating = new javax.swing.JComboBox<>(ratings);
+        cmbRating.setSelectedItem(currentRatingStr);
 
-        String newRatingStr = javax.swing.JOptionPane.showInputDialog(this, "Edit Rating (1-5):", currentRatingStr);
-        if (newRatingStr == null || newRatingStr.isEmpty()) return;
+        panel.add(new javax.swing.JLabel("Penulis (Read-Only):"));
+        panel.add(txtInfo);
+        panel.add(new javax.swing.JLabel("Edit Isi Komentar:"));
+        panel.add(txtComment);
+        panel.add(new javax.swing.JLabel("Edit Rating:"));
+        panel.add(cmbRating);
 
-        // 4. Validasi & Update
-        try {
-            int newRating = Integer.parseInt(newRatingStr);
-            if (newRating < 1 || newRating > 5) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Rating harus 1-5!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
+        // 4. TAMPILKAN DIALOG
+        int result = javax.swing.JOptionPane.showConfirmDialog(null, panel, 
+                "Edit Komentar User", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+        if (result == javax.swing.JOptionPane.OK_OPTION) {
+            try {
+                // 5. PROSES UPDATE
+                String newText = txtComment.getText();
+                int newRating = Integer.parseInt((String) cmbRating.getSelectedItem());
+                
+                if (newText.trim().isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Komentar tidak boleh kosong!");
+                    return;
+                }
+
+                if (adminDAO.updateComment(id, newText, newRating)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Komentar berhasil diperbarui!");
+                    loadTable();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal update komentar.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error input rating!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
-
-            if (adminDAO.updateComment(id, newText, newRating)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Komentar berhasil diupdate!");
-                loadTable();
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal update komentar.");
-            }
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Rating harus angka!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 

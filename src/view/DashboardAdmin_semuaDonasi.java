@@ -331,7 +331,6 @@ public class DashboardAdmin_semuaDonasi extends javax.swing.JFrame {
     }//GEN-LAST:event_lblUserMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
         // 1. Cek Baris Terpilih
         int selectedRow = tableAllDonations.getSelectedRow();
         if (selectedRow == -1) {
@@ -340,33 +339,64 @@ public class DashboardAdmin_semuaDonasi extends javax.swing.JFrame {
         }
 
         // 2. Ambil Data Lama dari Tabel
+        // Urutan Kolom: 0=ID, 1=Nama, 2=Donatur, 3=Jumlah, 4=Expired, 5=Status
         String id = tableAllDonations.getValueAt(selectedRow, 0).toString();
         String currentName = tableAllDonations.getValueAt(selectedRow, 1).toString();
-        
-        // Ambil angka saja dari string "50 Porsi" -> jadi "50"
         String currentQtyStr = tableAllDonations.getValueAt(selectedRow, 3).toString().replace(" Porsi", "");
+        String currentExp = tableAllDonations.getValueAt(selectedRow, 4).toString();
+        String currentStatus = tableAllDonations.getValueAt(selectedRow, 5).toString();
+        
+        // Note: Lokasi tidak ada di tabel, jadi kita set kosong dulu atau ambil via DAO jika mau perfect
+        // Untuk sekarang kita biarkan admin input baru atau default "-"
+        String currentLocation = "-"; 
 
-        // 3. Tampilkan Input Dialog untuk Data Baru
-        String newName = javax.swing.JOptionPane.showInputDialog(this, "Edit Nama Makanan:", currentName);
-        String newQtyStr = javax.swing.JOptionPane.showInputDialog(this, "Edit Jumlah Porsi:", currentQtyStr);
+        // 3. BUAT FORM CUSTOM (Panel)
+        javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.GridLayout(0, 1));
+        
+        javax.swing.JTextField txtName = new javax.swing.JTextField(currentName);
+        javax.swing.JTextField txtQty = new javax.swing.JTextField(currentQtyStr);
+        javax.swing.JTextField txtDate = new javax.swing.JTextField(currentExp); // Format YYYY-MM-DD
+        javax.swing.JTextField txtLoc = new javax.swing.JTextField(currentLocation);
+        
+        // ComboBox untuk Status (Biar gak typo)
+        String[] statuses = {"AVAILABLE", "RESERVED", "TAKEN"};
+        javax.swing.JComboBox<String> cmbStatus = new javax.swing.JComboBox<>(statuses);
+        cmbStatus.setSelectedItem(currentStatus);
 
-        // Validasi jika user menekan Cancel atau input kosong
-        if (newName == null || newQtyStr == null || newName.isEmpty() || newQtyStr.isEmpty()) {
-            return; // Batal edit
-        }
+        panel.add(new javax.swing.JLabel("Nama Makanan:"));
+        panel.add(txtName);
+        panel.add(new javax.swing.JLabel("Jumlah Porsi:"));
+        panel.add(txtQty);
+        panel.add(new javax.swing.JLabel("Tgl Expired (YYYY-MM-DD):"));
+        panel.add(txtDate);
+        panel.add(new javax.swing.JLabel("Status:"));
+        panel.add(cmbStatus);
+        panel.add(new javax.swing.JLabel("Lokasi Pengambilan (Update):"));
+        panel.add(txtLoc);
 
-        // 4. Panggil DAO untuk Update
-        try {
-            int newQty = Integer.parseInt(newQtyStr);
-            
-            if (adminDAO.updateDonation(id, newName, newQty)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diupdate!");
-                loadTable(); // Refresh tabel
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal update data.");
+        // 4. TAMPILKAN DIALOG
+        int result = javax.swing.JOptionPane.showConfirmDialog(null, panel, 
+                "Edit Data Donasi Lengkap", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+        if (result == javax.swing.JOptionPane.OK_OPTION) {
+            try {
+                // 5. AMBIL NILAI BARU
+                String newName = txtName.getText();
+                int newQty = Integer.parseInt(txtQty.getText());
+                java.sql.Date newDate = java.sql.Date.valueOf(txtDate.getText()); // Wajib format YYYY-MM-DD
+                String newStatus = (String) cmbStatus.getSelectedItem();
+                String newLoc = txtLoc.getText();
+
+                // 6. SIMPAN VIA DAO
+                if (adminDAO.updateDonation(id, newName, newQty, newDate, newStatus, newLoc)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diperbarui!");
+                    loadTable();
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal update data.");
+                }
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Format Salah! Cek Angka/Tanggal (YYYY-MM-DD)", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Jumlah porsi harus angka!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 

@@ -153,11 +153,11 @@ public class AdminDAO {
     
     // --- page semua user
     public DefaultTableModel getAllUsers() {
-        String[] columns = {"ID User", "Nama", "Email", "No. HP", "Role", "Tipe/Kategori"};
+        // Tambahkan kolom "Alamat" di urutan terakhir
+        String[] columns = {"ID User", "Nama", "Email", "No. HP", "Role", "Tipe", "Alamat"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        // Menggunakan COALESCE untuk mengambil tipe bisnis ATAU tipe penerima (yang tidak null)
-        String sql = "SELECT user_id, name, email, phone, role, " +
+        String sql = "SELECT user_id, name, email, phone, role, address, " +
                      "COALESCE(business_type, recipient_type, '-') AS specific_type " +
                      "FROM users " +
                      "ORDER BY created_at DESC";
@@ -170,7 +170,8 @@ public class AdminDAO {
                     rs.getString("email"),
                     rs.getString("phone"),
                     rs.getString("role"),
-                    rs.getString("specific_type")
+                    rs.getString("specific_type"),
+                    rs.getString("address") // Data Alamat masuk sini
                 });
             }
         } catch (SQLException e) {
@@ -214,29 +215,37 @@ public class AdminDAO {
     
     // --- BAGIAN CRUD: UPDATE METHODS ---
     // 1. Update Data Donasi (Nama Makanan & Jumlah)
-    public boolean updateDonation(String id, String foodName, int quantity) {
-        String sql = "UPDATE food_donations SET food_name = ?, quantity = ? WHERE donation_id = ?";
+    public boolean updateDonation(String id, String foodName, int quantity, java.sql.Date expiryDate, String status, String location) {
+        String sql = "UPDATE food_donations SET food_name = ?, quantity = ?, expiry_date = ?, status = ?, pickup_location = ? WHERE donation_id = ?";
+        
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, foodName);
             stmt.setInt(2, quantity);
-            stmt.setString(3, id);
+            stmt.setDate(3, expiryDate);
+            stmt.setString(4, status);
+            stmt.setString(5, location);
+            stmt.setString(6, id);
+            
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error updating donation: " + e.getMessage());
+            System.err.println("Error updating donation full: " + e.getMessage());
             return false;
         }
     }
 
     // 2. Update Data User (Nama & No HP)
-    public boolean updateUser(String id, String name, String phone) {
-        String sql = "UPDATE users SET name = ?, phone = ? WHERE user_id = ?";
+    public boolean updateUser(String id, String name, String email, String phone, String role, String address) {
+        String sql = "UPDATE users SET name = ?, email = ?, phone = ?, role = ?, address = ? WHERE user_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, name);
-            stmt.setString(2, phone);
-            stmt.setString(3, id);
+            stmt.setString(2, email);
+            stmt.setString(3, phone);
+            stmt.setString(4, role);
+            stmt.setString(5, address);
+            stmt.setString(6, id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("Error updating user: " + e.getMessage());
+            System.err.println("Error updating user full: " + e.getMessage());
             return false;
         }
     }

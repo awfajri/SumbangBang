@@ -370,30 +370,79 @@ public class DashboardAdmin_semuaUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        // 1. Cek Baris Terpilih
         int selectedRow = tableAllUsers.getSelectedRow();
         if (selectedRow == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Pilih user yang ingin diedit!");
             return;
         }
 
+        // 2. Ambil Data Lama dari Tabel (Sesuai urutan di DAO baru)
+        // 0:ID, 1:Nama, 2:Email, 3:HP, 4:Role, 5:Tipe, 6:Alamat
         String id = tableAllUsers.getValueAt(selectedRow, 0).toString();
         String currentName = tableAllUsers.getValueAt(selectedRow, 1).toString();
+        String currentEmail = tableAllUsers.getValueAt(selectedRow, 2).toString();
         String currentPhone = tableAllUsers.getValueAt(selectedRow, 3).toString();
+        String currentRole = tableAllUsers.getValueAt(selectedRow, 4).toString();
+        
+        // Cek null safety untuk alamat
+        Object addrObj = tableAllUsers.getValueAt(selectedRow, 6);
+        String currentAddress = (addrObj != null) ? addrObj.toString() : "-";
 
-        // Input Dialog Berurutan
-        String newName = javax.swing.JOptionPane.showInputDialog(this, "Edit Nama User:", currentName);
-        if (newName == null || newName.isEmpty()) return; // Cek jika cancel di tengah jalan
+        // 3. BUAT FORM CUSTOM (Panel)
+        javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.GridLayout(0, 1));
+        
+        javax.swing.JTextField txtName = new javax.swing.JTextField(currentName);
+        javax.swing.JTextField txtEmail = new javax.swing.JTextField(currentEmail);
+        javax.swing.JTextField txtPhone = new javax.swing.JTextField(currentPhone);
+        javax.swing.JTextField txtAddress = new javax.swing.JTextField(currentAddress);
+        
+        // Dropdown Role
+        String[] roles = {"DONATUR", "PENERIMA", "ADMIN"};
+        javax.swing.JComboBox<String> cmbRole = new javax.swing.JComboBox<>(roles);
+        cmbRole.setSelectedItem(currentRole);
 
-        String newPhone = javax.swing.JOptionPane.showInputDialog(this, "Edit No. HP:", currentPhone);
-        if (newPhone == null || newPhone.isEmpty()) return;
+        panel.add(new javax.swing.JLabel("Nama Lengkap:"));
+        panel.add(txtName);
+        panel.add(new javax.swing.JLabel("Email (Login):"));
+        panel.add(txtEmail);
+        panel.add(new javax.swing.JLabel("No. Handphone:"));
+        panel.add(txtPhone);
+        panel.add(new javax.swing.JLabel("Role Akun:"));
+        panel.add(cmbRole);
+        panel.add(new javax.swing.JLabel("Alamat:"));
+        panel.add(txtAddress);
 
-        // Panggil DAO
-        if (adminDAO.updateUser(id, newName, newPhone)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "User berhasil diupdate!");
-            loadTable();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal update user.");
+        // 4. TAMPILKAN DIALOG
+        int result = javax.swing.JOptionPane.showConfirmDialog(null, panel, 
+                "Edit Data User Lengkap", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+        if (result == javax.swing.JOptionPane.OK_OPTION) {
+            try {
+                // 5. AMBIL NILAI BARU
+                String newName = txtName.getText().trim();
+                String newEmail = txtEmail.getText().trim();
+                String newPhone = txtPhone.getText().trim();
+                String newRole = (String) cmbRole.getSelectedItem();
+                String newAddress = txtAddress.getText().trim();
+                
+                // Validasi sederhana
+                if (newName.isEmpty() || newEmail.isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Nama dan Email tidak boleh kosong!");
+                    return;
+                }
+
+                // 6. SIMPAN VIA DAO
+                if (adminDAO.updateUser(id, newName, newEmail, newPhone, newRole, newAddress)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "User berhasil diperbarui!");
+                    loadTable(); // Refresh tabel
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal update. Mungkin email sudah dipakai user lain.", "Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                javax.swing.JOptionPane.showMessageDialog(this, "Terjadi kesalahan sistem.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnEditActionPerformed
 

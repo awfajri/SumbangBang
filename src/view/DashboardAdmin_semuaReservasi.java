@@ -384,7 +384,6 @@ public class DashboardAdmin_semuaReservasi extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEdit1ActionPerformed
-        // TODO add your handling code here:
         // 1. Cek Baris Terpilih
         int selectedRow = tableAllReservations.getSelectedRow();
         if (selectedRow == -1) {
@@ -392,32 +391,44 @@ public class DashboardAdmin_semuaReservasi extends javax.swing.JFrame {
             return;
         }
 
-        // 2. Ambil ID dan Status Saat Ini
+        // 2. Ambil Data Lama
+        // Kolom: 0=ID, 1=Makanan, 2=Penerima, 3=Tgl, 4=Status, 5=Kode
         String id = tableAllReservations.getValueAt(selectedRow, 0).toString();
+        String currentFood = tableAllReservations.getValueAt(selectedRow, 1).toString();
+        String currentRecipient = tableAllReservations.getValueAt(selectedRow, 2).toString();
         String currentStatus = tableAllReservations.getValueAt(selectedRow, 4).toString();
 
-        // 3. Siapkan Opsi Status (Agar tidak typo)
-        Object[] statuses = {"PENDING", "CONFIRMED", "COMPLETED"};
+        // 3. BUAT FORM CUSTOM (Panel)
+        javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.GridLayout(0, 1));
         
-        // Tampilkan Input Dialog dengan Dropdown
-        String newStatus = (String) javax.swing.JOptionPane.showInputDialog(
-                this,
-                "Ubah Status Reservasi:",
-                "Edit Status",
-                javax.swing.JOptionPane.QUESTION_MESSAGE,
-                null,
-                statuses,
-                currentStatus);
+        // Info Read-Only (Biar Admin tau apa yang diedit)
+        javax.swing.JTextField txtInfo = new javax.swing.JTextField(currentFood + " - " + currentRecipient);
+        txtInfo.setEditable(false);
+        
+        // Dropdown Status (PENTING biar gak typo)
+        String[] statuses = {"PENDING", "CONFIRMED", "COMPLETED"};
+        javax.swing.JComboBox<String> cmbStatus = new javax.swing.JComboBox<>(statuses);
+        cmbStatus.setSelectedItem(currentStatus);
 
-        // Jika user cancel
-        if (newStatus == null) return;
+        panel.add(new javax.swing.JLabel("Detail Reservasi (Read-Only):"));
+        panel.add(txtInfo);
+        panel.add(new javax.swing.JLabel("Update Status:"));
+        panel.add(cmbStatus);
 
-        // 4. Panggil DAO
-        if (adminDAO.updateReservationStatus(id, newStatus)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Status berhasil diupdate!");
-            loadTable();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal update status.");
+        // 4. TAMPILKAN DIALOG
+        int result = javax.swing.JOptionPane.showConfirmDialog(null, panel, 
+                "Edit Status Reservasi", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+        if (result == javax.swing.JOptionPane.OK_OPTION) {
+            // 5. PROSES UPDATE
+            String newStatus = (String) cmbStatus.getSelectedItem();
+            
+            if (adminDAO.updateReservationStatus(id, newStatus)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Status berhasil diperbarui!");
+                loadTable();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal update status.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnEdit1ActionPerformed
 

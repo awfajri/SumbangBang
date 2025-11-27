@@ -15,10 +15,10 @@ public class Reservation {
     private String reservationId;
     private String donationId;
     private String recipientId;
-    private String recipientName; // For display
-    private String donorId; // For notification
+    private String recipientName; 
+    private String donorId; 
     private Timestamp reservationTime;
-    private String status; // PENDING, CONFIRMED, COMPLETED
+    private String status; 
     private String pickupCode;
     private Timestamp confirmedAt;
     private Timestamp completedAt;

@@ -43,8 +43,6 @@ public class SentCommentDAO {
                 c.setRating(rs.getInt("rating"));
                 c.setDate(rs.getDate("comment_date"));
                 
-                // Di sini kita pakai setter recipientName untuk menyimpan nama Donatur
-                // (Agar tidak perlu ubah model Comment, kita 'pinjam' field ini untuk tampilan)
                 c.setRecipientName(rs.getString("donor_name")); 
                 
                 c.setFoodName(rs.getString("food_name"));

@@ -44,6 +44,8 @@ public class register extends javax.swing.JFrame {
         btnRegister = new javax.swing.JButton();
         LinkLogin = new javax.swing.JLabel();
         labelRegister_2 = new javax.swing.JLabel();
+        fieldAlamat = new javax.swing.JTextField();
+        labelNama1 = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,7 +64,7 @@ public class register extends javax.swing.JFrame {
         labelNama.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelNama.setForeground(new java.awt.Color(142, 142, 147));
         labelNama.setText("Nama");
-        getContentPane().add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        getContentPane().add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
         comboTypeAccount.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         comboTypeAccount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Donatur", "Penerima" }));
@@ -78,27 +80,27 @@ public class register extends javax.swing.JFrame {
         fieldNama.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         fieldNama.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         fieldNama.setPreferredSize(new java.awt.Dimension(272, 44));
-        getContentPane().add(fieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+        getContentPane().add(fieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
         fieldEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         fieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         fieldEmail.setPreferredSize(new java.awt.Dimension(272, 44));
-        getContentPane().add(fieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        getContentPane().add(fieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         labelEmail.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(142, 142, 147));
         labelEmail.setText("Email");
-        getContentPane().add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        getContentPane().add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
 
         labelPassword.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelPassword.setForeground(new java.awt.Color(142, 142, 147));
         labelPassword.setText("Password");
-        getContentPane().add(labelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
+        getContentPane().add(labelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         fieldPassword.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         fieldPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
         fieldPassword.setPreferredSize(new java.awt.Dimension(272, 44));
-        getContentPane().add(fieldPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 270, -1));
+        getContentPane().add(fieldPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 270, -1));
 
         btnRegister.setBackground(new java.awt.Color(0, 175, 119));
         btnRegister.setFont(new java.awt.Font("Lufga", 1, 16)); // NOI18N
@@ -110,7 +112,7 @@ public class register extends javax.swing.JFrame {
                 btnRegisterActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 272, 41));
+        getContentPane().add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 272, 41));
 
         LinkLogin.setFont(new java.awt.Font("Lufga", 1, 12)); // NOI18N
         LinkLogin.setForeground(new java.awt.Color(0, 113, 77));
@@ -120,12 +122,22 @@ public class register extends javax.swing.JFrame {
                 LinkLoginMouseClicked(evt);
             }
         });
-        getContentPane().add(LinkLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 490, -1, -1));
+        getContentPane().add(LinkLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 530, -1, -1));
 
         labelRegister_2.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
         labelRegister_2.setForeground(new java.awt.Color(142, 142, 147));
         labelRegister_2.setText("Sudah Punya Akun?");
-        getContentPane().add(labelRegister_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
+        getContentPane().add(labelRegister_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, -1, -1));
+
+        fieldAlamat.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        fieldAlamat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 224, 224)));
+        fieldAlamat.setPreferredSize(new java.awt.Dimension(272, 44));
+        getContentPane().add(fieldAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+
+        labelNama1.setFont(new java.awt.Font("Lufga", 0, 12)); // NOI18N
+        labelNama1.setForeground(new java.awt.Color(142, 142, 147));
+        labelNama1.setText("Alamat");
+        getContentPane().add(labelNama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.jpg"))); // NOI18N
         bg.setText("jLabel2");
@@ -140,17 +152,17 @@ public class register extends javax.swing.JFrame {
         String nama = fieldNama.getText().trim();
         String email = fieldEmail.getText().trim();
         String pass = new String(fieldPassword.getPassword());
+        String address = fieldAlamat.getText().trim();
         
         // Default value untuk field spesifik
-        String phone = "08123456789"; // Sementara dummy atau tambah field di UI
-        String address = "Alamat Default"; // Sementara dummy atau tambah field di UI
+        String phone = "085156287360";
 
         // 2. Validasi Input Dasar
-        if (nama.isEmpty() || email.isEmpty() || pass.isEmpty()) {
+        if (nama.isEmpty() || email.isEmpty() || pass.isEmpty() || address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mohon lengkapi semua data!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
         // 3. Siapkan Objek User Berdasarkan Role
         User newUser = null;
         
@@ -216,11 +228,13 @@ public class register extends javax.swing.JFrame {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnRegister;
     private javax.swing.JComboBox<String> comboTypeAccount;
+    private javax.swing.JTextField fieldAlamat;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldNama;
     private javax.swing.JPasswordField fieldPassword;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelNama;
+    private javax.swing.JLabel labelNama1;
     private javax.swing.JLabel labelPassword;
     private javax.swing.JLabel labelRegister_2;
     private javax.swing.JLabel labelTypeAccount;

@@ -15,11 +15,11 @@ import java.time.LocalDate;
 public class FoodDonation {
     private String donationId;
     private String donorId;
-    private String donorName; // For display purposes
+    private String donorName; 
     private String foodName;
     private int quantity;
     private Date expiryDate;
-    private String status; // AVAILABLE, RESERVED, TAKEN
+    private String status; 
     private String pickupLocation;
     private String description;
     private Timestamp createdAt;

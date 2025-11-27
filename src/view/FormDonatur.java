@@ -19,26 +19,23 @@ public class FormDonatur extends javax.swing.JFrame {
 
     public FormDonatur() {
         initComponents();
-        this.parentDashboard = null; // Tidak ada dashboard yang memanggil
+        this.parentDashboard = null; 
     }
     
     public FormDonatur(DashboardDonatur parent) {
         initComponents();
-        this.parentDashboard = parent; // Simpan dashboard-nya
+        this.parentDashboard = parent; 
     }
     
     public FormDonatur(DashboardDonatur parent, String donationId) {
         initComponents();
         this.parentDashboard = parent;
         
-        // === SET MODE EDIT ===
         this.isEditMode = true;
         this.donationIdToEdit = donationId;
         
-        // Ubah teks tombol
         btnPostDonasi.setText("Update Donasi");
         
-        // Panggil method untuk memuat data lama
         loadDataForEdit(donationId);
     }
     
@@ -48,14 +45,10 @@ public class FormDonatur extends javax.swing.JFrame {
             FoodDonation donation = dao.getDonationById(donationId);
 
             if (donation != null) {
-                // Isi semua field dengan data dari database
-                // (Ganti 'namaField' dengan nama variabel JTextfield kamu)
                 fieldNama.setText(donation.getFoodName());
                 fieldJumlah.setText(String.valueOf(donation.getQuantity()));
                 fieldLokasi.setText(donation.getPickupLocation());
                 
-                // Konversi java.sql.Date ke String
-                // Sesuaikan format "MM/dd/yyyy" jika perlu
                 SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
                 fieldTanggal.setText(format.format(donation.getExpiryDate()));
                 
@@ -188,7 +181,7 @@ public class FormDonatur extends javax.swing.JFrame {
         // Konversi quantity (jumlah) ke angka
         int quantity = Integer.parseInt(quantityStr);
         
-        // Konversi tanggal (String ke java.sql.Date)
+        // Konversi tanggal
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         java.util.Date parsedDate = format.parse(expiryDateStr);
         java.sql.Date expiryDate = new java.sql.Date(parsedDate.getTime());
@@ -201,13 +194,11 @@ public class FormDonatur extends javax.swing.JFrame {
         donation.setPickupLocation(location);
         donation.setDescription(foodName); // (atau tambahkan field deskripsi)
 
-        // === INI LOGIKA BARUNYA (EDIT vs INSERT) ===
         boolean isSuccess = false;
         
         if (isEditMode) {
-            // === MODE UPDATE ===
-            donation.setDonationId(this.donationIdToEdit); // Pasang ID lama
-            // Panggil method 'updateDonation' dari DAO kamu
+            donation.setDonationId(this.donationIdToEdit);
+            // Panggil method 'updateDonation' 
             isSuccess = dao.updateDonation(donation); 
             
         } else {
@@ -219,7 +210,7 @@ public class FormDonatur extends javax.swing.JFrame {
             donation.setDonorId(donorId);
             donation.setStatus("AVAILABLE");
             
-            // Panggil method 'insertDonation' dari DAO kamu
+            // Panggil method 'insertDonation'
             isSuccess = dao.insertDonation(donation); 
         }
 
@@ -233,7 +224,7 @@ public class FormDonatur extends javax.swing.JFrame {
                 this.parentDashboard.loadDashboardData();
             }
             
-            this.dispose(); // Tutup form ini
+            this.dispose();
             
         } else {
             String message = isEditMode ? "Gagal meng-update donasi." : "Gagal memposting donasi.";

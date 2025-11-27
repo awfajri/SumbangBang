@@ -44,7 +44,6 @@ public class Penerima extends User {
     
     // Business Methods
     public List<FoodDonation> searchDonations(String keyword) {
-        // Implementation akan di DAO layer
         System.out.println("Searching donations with keyword: " + keyword);
         return new ArrayList<>();
     }

@@ -17,42 +17,27 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private AdminDAO adminDAO;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin.class.getName());
 
-    /**
-     * Creates new form DashboardAdmin
-     */
     
     public DashboardAdmin() {
         initComponents();
         this.adminDAO = new AdminDAO();
-        // Jangan panggil fungsi yang butuh adminUser di sini agar tidak error NullPointer
     }
     public DashboardAdmin(User user) {
         this.adminUser = user;
         this.adminDAO = new AdminDAO();
         
-        initComponents(); // Digenerate oleh NetBeans
+        initComponents(); 
         
-        // Inisialisasi Data Custom
-        setupAdminProfile();
         loadStatistics();
         loadRecentActivityTable();
     }
-    private void setupAdminProfile() {
-        // Misal ada label nama di pojok kanan atas
-        // lblAdminName.setText("Halo, " + adminUser.getName());
-    }
+ 
     private void loadStatistics() {
         // Mengambil data real dari database
         int totalDonasi = adminDAO.getTotalDonations();
         int totalReservasi = adminDAO.getTotalReservations();
         int totalUser = adminDAO.getTotalUsers();
 
-        // Set ke Label UI (Pastikan nama variabel label di Design sesuai)
-        // lblTotalDonasi.setText(String.valueOf(totalDonasi));
-        // lblTotalReservasi.setText(String.valueOf(totalReservasi));
-        // lblTotalUser.setText(String.valueOf(totalUser));
-        
-        // Debugging log
         lblTotalDonasi.setText(String.valueOf(totalDonasi));
         lblTotalReservasi.setText(String.valueOf(totalReservasi));
         lblTotalUser.setText(String.valueOf(totalUser)); 
@@ -63,9 +48,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
         // Setup model tabel
         javax.swing.table.DefaultTableModel model = adminDAO.getRecentActivities();
         
-        // 2. Pasang ke Tabel (Hapus tanda // di depannya)
         tableAktivitas.setModel(model);
-        // tableAktivitas.setModel(model); // Uncomment jika nama tabel di UI adalah tableAktivitas
+        
     }
 
     /**
@@ -422,11 +406,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
             "Konfirmasi Logout", 
             javax.swing.JOptionPane.YES_NO_OPTION);
         
-        // 2. Jika user memilih YES
+        // 2. Jika user memilih yes
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             // Panggil helper Navigator untuk pindah ke halaman Login
             Navigator.toLogin(this); 
-            // Frame Dashboard ini otomatis di-dispose oleh Navigator.toLogin(this)
+            
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 

@@ -18,12 +18,11 @@ public class DetailDonasi extends javax.swing.JFrame {
     public DetailDonasi(String donationId) {
         this.donationId = donationId;
         
-        initComponents(); // Init desain dari NetBeans
+        initComponents();
         
         // Panggil method untuk mengisi data
         loadData(); 
         
-        // Agar muncul di tengah layar & tidak menutup aplikasi saat di-close
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
@@ -38,7 +37,6 @@ public class DetailDonasi extends javax.swing.JFrame {
                 valNamaMakanan.setText(d.getFoodName());
                 
                 // 2. Nama Donatur
-                // (Jika di model FoodDonation belum ada getDonorName, bisa pakai placeholder dulu)
                 String donaturName = d.getDonorName(); 
                 if (donaturName == null) donaturName = "Donatur (Restoran)";
                 valDonatur.setText("Oleh: " + donaturName);
@@ -46,7 +44,7 @@ public class DetailDonasi extends javax.swing.JFrame {
                 // 3. Status & Warna
                 valStatus.setText(d.getStatus());
                 if (d.getStatus().equalsIgnoreCase("AVAILABLE")) {
-                    valStatus.setForeground(new Color(0, 175, 119)); // Hijau
+                    valStatus.setForeground(new Color(0, 175, 119)); 
                 } else {
                     valStatus.setForeground(Color.ORANGE);
                 }

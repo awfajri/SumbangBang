@@ -31,7 +31,7 @@ public class ListKomentarSaya extends javax.swing.JFrame {
     public ListKomentarSaya() {
         initComponents();
         
-        // Setup Layout Panel List agar bisa menumpuk ke bawah
+        // Setup Layout Panel List
         panelListUlasan.setLayout(new javax.swing.BoxLayout(panelListUlasan, javax.swing.BoxLayout.Y_AXIS));
         
         // Panggil logika untuk mengisi data
@@ -43,7 +43,7 @@ public class ListKomentarSaya extends javax.swing.JFrame {
     
     private void loadMyComments() {
         // 1. Bersihkan panel
-        panelListUlasan.removeAll(); // Sesuaikan nama variabel panel kamu (panelListUlasan)
+        panelListUlasan.removeAll(); 
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
         dao.SentCommentDAO dao = new dao.SentCommentDAO();
@@ -60,7 +60,6 @@ public class ListKomentarSaya extends javax.swing.JFrame {
             panelListUlasan.add(emptyLabel, BorderLayout.CENTER);
             
         } else {
-            // Gunakan BoxLayout Y agar kartu menumpuk ke bawah
             panelListUlasan.setLayout(new javax.swing.BoxLayout(panelListUlasan, javax.swing.BoxLayout.Y_AXIS));
 
             for (Comment c : list) {
@@ -72,33 +71,29 @@ public class ListKomentarSaya extends javax.swing.JFrame {
                 String ratingStr = "⭐".repeat(c.getRating()); 
 
                 // === SETUP CARD ===
-                JPanel card = new JPanel(new BorderLayout()); // Hapus gap
+                JPanel card = new JPanel(new BorderLayout());
                 card.setBackground(Color.WHITE);
                 card.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230), 1));
                 
                 int scrollWidth = scrollPane.getWidth();
                 if (scrollWidth <= 0) scrollWidth = 280;
                 
-                // 2. BUAT STRIP HIJAU (KIRI)
                 JPanel greenStrip = new JPanel();
                 greenStrip.setBackground(PRIMARY_COLOR);
-                greenStrip.setPreferredSize(new Dimension(10, 0)); // Lebar 10px
+                greenStrip.setPreferredSize(new Dimension(10, 0)); 
 
-                // 3. BUAT PANEL KONTEN (TENGAH)
-                // Panel ini yang akan menampung semua teks
                 JPanel contentPanel = new JPanel();
                 contentPanel.setLayout(new javax.swing.BoxLayout(contentPanel, javax.swing.BoxLayout.Y_AXIS));
                 contentPanel.setBackground(Color.WHITE);
 
                 contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
 
-                // -- Isi Konten --
                 JPanel headerInfo = new JPanel(new BorderLayout());
                 headerInfo.setBackground(Color.WHITE);
                 headerInfo.setMaximumSize(new Dimension(1000, 20)); 
                 
                 JLabel lblTo = new JLabel(toDonatur);
-                lblTo.setFont(new Font("Lufga", Font.BOLD, 13)); // Font agak diperkecil biar muat
+                lblTo.setFont(new Font("Lufga", Font.BOLD, 13));
                 lblTo.setForeground(TEXT_DARK);
                 
                 JLabel lblDate = new JLabel(date);
@@ -121,7 +116,6 @@ public class ListKomentarSaya extends javax.swing.JFrame {
                 lblContent.setForeground(new Color(80, 80, 80));
                 lblContent.setAlignmentX(Component.LEFT_ALIGNMENT);
                 
-                // Masukkan ke contentPanel
                 contentPanel.add(headerInfo);
                 contentPanel.add(Box.createVerticalStrut(5)); 
                 contentPanel.add(lblFood);
@@ -129,18 +123,14 @@ public class ListKomentarSaya extends javax.swing.JFrame {
                 contentPanel.add(Box.createVerticalStrut(8)); 
                 contentPanel.add(lblContent);
 
-                // === 4. GABUNGKAN (Card Utama) ===
-                // Strip Hijau di Kiri (WEST), Konten di Tengah (CENTER)
                 card.add(greenStrip, BorderLayout.WEST);
                 card.add(contentPanel, BorderLayout.CENTER);
 
-                // Masukkan ke List Panel Utama
                 panelListUlasan.add(card);
-                panelListUlasan.add(Box.createVerticalStrut(15)); // Jarak antar kartu
+                panelListUlasan.add(Box.createVerticalStrut(15));
             }
         }
         
-        // Wajib refresh UI
         panelListUlasan.revalidate();
         panelListUlasan.repaint();
     }
@@ -201,7 +191,7 @@ public class ListKomentarSaya extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
-        this.dispose(); // Tutup halaman ulasan
+        this.dispose(); 
     }//GEN-LAST:event_btnBackMouseClicked
 
     /**

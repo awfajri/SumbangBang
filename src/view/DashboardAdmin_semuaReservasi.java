@@ -17,15 +17,10 @@ public class DashboardAdmin_semuaReservasi extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin_semuaReservasi.class.getName());
 
-    /**
-     * Creates new form DashboardAdmin
-     */
-    
     public DashboardAdmin_semuaReservasi() {
         initComponents();
         this.adminDAO = new AdminDAO();
         loadTable();
-        // Jangan panggil fungsi yang butuh adminUser di sini agar tidak error NullPointer
     }
     public DashboardAdmin_semuaReservasi(User user) {
         initComponents();
@@ -398,7 +393,6 @@ public class DashboardAdmin_semuaReservasi extends javax.swing.JFrame {
         }
 
         // 2. Ambil ID dan Status Saat Ini
-        // Kolom: 0=ID, 1=Makanan, 2=Penerima, 3=Tgl, 4=Status, 5=PickupCode
         String id = tableAllReservations.getValueAt(selectedRow, 0).toString();
         String currentStatus = tableAllReservations.getValueAt(selectedRow, 4).toString();
 
@@ -413,7 +407,7 @@ public class DashboardAdmin_semuaReservasi extends javax.swing.JFrame {
                 javax.swing.JOptionPane.QUESTION_MESSAGE,
                 null,
                 statuses,
-                currentStatus); // Default selection
+                currentStatus);
 
         // Jika user cancel
         if (newStatus == null) return;
@@ -439,7 +433,6 @@ public class DashboardAdmin_semuaReservasi extends javax.swing.JFrame {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             // Panggil helper Navigator untuk pindah ke halaman Login
             Navigator.toLogin(this); 
-            // Frame Dashboard ini otomatis di-dispose oleh Navigator.toLogin(this)
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 

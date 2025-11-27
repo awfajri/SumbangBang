@@ -32,7 +32,7 @@ public abstract class User {
         this.role = role;
     }
     
-    // Abstract methods - harus diimplementasikan oleh subclass
+    // Abstract methods
     public abstract boolean login();
     public abstract void displayDashboard();
     

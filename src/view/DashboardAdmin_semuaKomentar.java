@@ -16,16 +16,11 @@ public class DashboardAdmin_semuaKomentar extends javax.swing.JFrame {
     private AdminDAO adminDAO;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin_semuaKomentar.class.getName());
-
-    /**
-     * Creates new form DashboardAdmin
-     */
     
     public DashboardAdmin_semuaKomentar() {
         initComponents();
         this.adminDAO = new AdminDAO();
         loadTable();
-        // Jangan panggil fungsi yang butuh adminUser di sini agar tidak error NullPointer
     }
     public DashboardAdmin_semuaKomentar(User user) {
         initComponents();
@@ -324,10 +319,8 @@ public class DashboardAdmin_semuaKomentar extends javax.swing.JFrame {
         }
 
         // 2. Ambil Data Lama
-        // Kolom: 0=ID, 1=Penerima, 2=Donatur, 3=Rating, 4=Isi, 5=Tanggal
         String id = tableAllComments.getValueAt(selectedRow, 0).toString();
-        
-        // Ambil angka rating saja (misal "5/5" -> ambil "5")
+
         String currentRatingStr = tableAllComments.getValueAt(selectedRow, 3).toString().split("/")[0];
         String currentText = tableAllComments.getValueAt(selectedRow, 4).toString();
 
@@ -396,7 +389,6 @@ public class DashboardAdmin_semuaKomentar extends javax.swing.JFrame {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             // Panggil helper Navigator untuk pindah ke halaman Login
             Navigator.toLogin(this); 
-            // Frame Dashboard ini otomatis di-dispose oleh Navigator.toLogin(this)
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 

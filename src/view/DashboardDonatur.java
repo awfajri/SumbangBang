@@ -4,21 +4,21 @@
  */
 package view;
 import dao.DonationDAO;
-import model.FoodDonation; // Dari DonationDAO kamu
+import model.FoodDonation; 
 import model.User;
-import sumbangbang.SumbangBang; // Untuk mengambil sesi login
+import sumbangbang.SumbangBang;
 import java.awt.Component;
 import java.sql.ResultSet;
-import java.sql.Connection; // Diperlukan untuk statistik
-import java.sql.PreparedStatement; // Diperlukan untuk statistik
+import java.sql.Connection; 
+import java.sql.PreparedStatement; 
 import java.util.List; 
 import javax.swing.JPanel; 
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
-import java.awt.FlowLayout; // Untuk layout card
-import java.awt.Dimension; // Untuk ukuran card
+import java.awt.FlowLayout; 
+import java.awt.Dimension; 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.BorderLayout;
@@ -36,61 +36,48 @@ public class DashboardDonatur extends javax.swing.JFrame {
     public DashboardDonatur() {
         initComponents();
 
-        this.donationDAO = new DonationDAO(); // Inisialisasi DAO
+        this.donationDAO = new DonationDAO(); 
 
-        // Cek jika user tidak ada (misal buka file ini langsung)
+        // Cek jika user tidak ada 
         if (currentUser == null) {
             JOptionPane.showMessageDialog(this, "Sesi tidak ditemukan. Harap login ulang.");
 
-            // Tutup dashboard, buka login
-            // DIPERBAIKI: new Login() (L besar)
             new login().setVisible(true);
             this.dispose();
-            return; // Hentikan eksekusi konstruktor
+            return; 
         }
 
-        // Jika user ada, muat semua data
         loadDashboardData();
     }
     
-    public DashboardDonatur(User user) { // Pastikan public
+    public DashboardDonatur(User user) { 
         initComponents();
         this.currentUser = user;
         this.donationDAO = new DonationDAO();
         
-        // Matikan Z-Order kalau bikin error, atau atur manual di Design
-        // getContentPane().setComponentZOrder(pnlSideMenu, 0); 
-        
         pnlSideMenu.setVisible(false);
         loadDashboardData();
         loadStatistics();
-        loadDonationList(); // Load daftar donasi juga
+        loadDonationList(); 
     }
 
     public void loadDashboardData() {
-        // Set sapaan "Hai, [Nama]"
         labelGreeting.setText("Hai, " + currentUser.getName());
         
-        // Muat data statistik
         loadStatistics();
 
-        // Muat daftar donasi
         loadDonationList();
     }
     private void loadStatistics() {
         if (currentUser == null) return;
         
-        // Kita gunakan DonationDAO yang sudah punya query lengkap
         String userId = currentUser.getUserId();
         
         try {
-            // 1. Ambil data real dari Database via DAO
             int totalDonasi = donationDAO.getTotalDonationsByDonor(userId);
             int totalPorsi = donationDAO.getTotalPortionsByDonor(userId);
             int totalReservasi = donationDAO.getTotalReservationsReceived(userId); 
             
-            // 2. Tampilkan ke UI (Text Field)
-            // Pastikan nama variabel (valueTotal...) sesuai dengan Design kamu
             if (valueTotalDonasi != null) valueTotalDonasi.setText(String.valueOf(totalDonasi));
             if (valueTotalPorsi != null) valueTotalPorsi.setText(String.valueOf(totalPorsi));
             if (valueTotalReservasi != null) valueTotalReservasi.setText(String.valueOf(totalReservasi));
@@ -101,11 +88,11 @@ public class DashboardDonatur extends javax.swing.JFrame {
         }
     }
     private void loadDonationList() {
-    // 1. Bersihkan panel dulu (WAJIB!)
+    // 1. Bersihkan panel dulu
         donationListPanel.removeAll();
 
         try {
-            // 2. Panggil method DAO kamu yang mengembalikan List
+            // 2. Panggil method DAO
             List<FoodDonation> donationList = donationDAO.getDonationsByDonor(currentUser.getUserId());
 
             // 3. Cek jika daftar donasi KOSONG
@@ -119,7 +106,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
                 donationListPanel.add(emptyLabel, BorderLayout.CENTER);
 
             } else {
-                // JIKA ADA ISI: Tampilkan card-card
+                // menampilkan card
                 donationListPanel.setLayout(new javax.swing.BoxLayout(donationListPanel, javax.swing.BoxLayout.Y_AXIS));
 
                 for (FoodDonation donation : donationList) {
@@ -129,24 +116,22 @@ public class DashboardDonatur extends javax.swing.JFrame {
                     String status = "Status: " + donation.getStatus();
                     String donationId = donation.getDonationId(); 
 
-                    // === 4. LAYOUT CARD (Tumpuk ke Bawah) ===
+                    // 4. LAYOUT CARD 
                     JPanel card = new JPanel();
                     card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
                     card.setBackground(Color.WHITE);
                     
-                    // Border untuk padding (jarak di dalam card)
                     card.setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(Color.LIGHT_GRAY), 
                         BorderFactory.createEmptyBorder(10, 10, 5, 10) // Padding
                     ));
                     
-                    // Atur ukuran card
                     int panelWidth = donationScrollPane.getWidth();
                     if (panelWidth <= 40) panelWidth = 400; 
                     card.setMaximumSize(new Dimension(panelWidth - 20, Short.MAX_VALUE));
                     card.setMinimumSize(new Dimension(panelWidth - 20, 60)); 
 
-                    // 5. BUAT PANEL TEKS (Bagian ATAS)
+                    // 5. BUAT PANEL TEKS
                     JPanel infoPanel = new JPanel();
                     infoPanel.setOpaque(false); 
                     infoPanel.setLayout(new javax.swing.BoxLayout(infoPanel, javax.swing.BoxLayout.Y_AXIS));
@@ -161,40 +146,33 @@ public class DashboardDonatur extends javax.swing.JFrame {
                     infoPanel.add(Box.createVerticalStrut(5)); 
                     infoPanel.add(lblDetails);
                     
-                    // 6. BUAT PANEL TOMBOL (Bagian BAWAH)
+                    // 6. BUAT PANEL TOMBOL
                     JPanel buttonPanel = new JPanel();
                     buttonPanel.setOpaque(false); 
-                    // Rata kanan agar rapi
                     buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
                     buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
 
-                    // --- TOMBOL-TOMBOL ---
                     JButton btnDetail = new JButton("Detail"); // TOMBOL BARU
                     JButton btnEdit = new JButton("Edit");
                     JButton btnHapus = new JButton("Hapus");
 
                     // 7. WARNA & STYLE TOMBOL
                     
-                    // Style Tombol Detail (Biru Muda / Abu Terang)
                     btnDetail.setBackground(new Color(240, 240, 240)); 
                     btnDetail.setForeground(Color.BLACK);
                     btnDetail.setFont(new Font("Lufga", Font.BOLD, 11));
                     
-                    // Style Tombol Edit (Hijau)
                     btnEdit.setBackground(new Color(0, 175, 119)); 
                     btnEdit.setForeground(Color.WHITE);
                     btnEdit.setFont(new Font("Lufga", Font.BOLD, 11));
 
-                    // Style Tombol Hapus (Merah)
                     btnHapus.setBackground(new Color(220, 53, 69)); 
                     btnHapus.setForeground(Color.WHITE);
                     btnHapus.setFont(new Font("Lufga", Font.BOLD, 11));
                     
                     // --- LOGIKA TOMBOL ---
-
-                    // 1. Logika Detail (Membuka Frame DetailDonasi)
+                    // 1. Logika Detail
                     btnDetail.addActionListener(e -> {
-                        // Pastikan kamu sudah punya file DetailDonasi.java
                         new DetailDonasi(donationId).setVisible(true);
                     });
 
@@ -223,20 +201,20 @@ public class DashboardDonatur extends javax.swing.JFrame {
                         }
                     });
                     
-                    // Masukkan tombol ke panel (Urutan: Detail -> Edit -> Hapus)
+                    // Masukkan tombol ke panel 
                     buttonPanel.add(btnDetail);
-                    buttonPanel.add(Box.createHorizontalStrut(5)); // Jarak antar tombol
+                    buttonPanel.add(Box.createHorizontalStrut(5)); 
                     buttonPanel.add(btnEdit);
                     buttonPanel.add(Box.createHorizontalStrut(5)); 
                     buttonPanel.add(btnHapus);
 
                     // 9. MASUKKAN PANEL-PANEL KE CARD
-                    card.add(infoPanel); // Teks di atas
-                    card.add(Box.createVerticalStrut(10)); // Jarak antara teks dan tombol
-                    card.add(buttonPanel); // Tombol di bawah
+                    card.add(infoPanel); 
+                    card.add(Box.createVerticalStrut(10)); 
+                    card.add(buttonPanel); 
                     
                     donationListPanel.add(card);
-                    donationListPanel.add(Box.createVerticalStrut(8)); // Spasi antar card
+                    donationListPanel.add(Box.createVerticalStrut(8)); 
                 }
             }
         } catch (Exception e) {
@@ -244,7 +222,7 @@ public class DashboardDonatur extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal memuat daftar donasi.");
         }
 
-        // 10. REFRESH TAMPILAN (WAJIB!)
+        // 10. REFRESH TAMPILAN
         donationListPanel.revalidate();
         donationListPanel.repaint();
     }
@@ -664,7 +642,6 @@ public class DashboardDonatur extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProfileMouseClicked
 
     private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
-        // TODO add your handling code here:
         // Tutup menu & dashboard
         pnlSideMenu.setVisible(false); 
         this.dispose();

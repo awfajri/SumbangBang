@@ -25,7 +25,6 @@ public class DashboardAdmin_semuaDonasi extends javax.swing.JFrame {
         initComponents();
         this.adminDAO = new AdminDAO();
         loadTable();
-        // Jangan panggil fungsi yang butuh adminUser di sini agar tidak error NullPointer
     }
     public DashboardAdmin_semuaDonasi(User user) {
         initComponents();
@@ -35,7 +34,7 @@ public class DashboardAdmin_semuaDonasi extends javax.swing.JFrame {
         loadTable();
     }
     private void loadTable() {
-        // Panggil method baru dari DAO
+        // Panggil method dari DAO
         DefaultTableModel model = adminDAO.getAllDonations();
         tableAllDonations.setModel(model);
     }
@@ -341,7 +340,6 @@ public class DashboardAdmin_semuaDonasi extends javax.swing.JFrame {
         }
 
         // 2. Ambil Data Lama dari Tabel
-        // Kolom: 0=ID, 1=Nama Makanan, 2=Donatur, 3=Jumlah, 4=Expired, 5=Status
         String id = tableAllDonations.getValueAt(selectedRow, 0).toString();
         String currentName = tableAllDonations.getValueAt(selectedRow, 1).toString();
         
@@ -444,11 +442,10 @@ public class DashboardAdmin_semuaDonasi extends javax.swing.JFrame {
             "Konfirmasi Logout", 
             javax.swing.JOptionPane.YES_NO_OPTION);
         
-        // 2. Jika user memilih YES
+        // 2. Jika user memilih yes
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             // Panggil helper Navigator untuk pindah ke halaman Login
             Navigator.toLogin(this); 
-            // Frame Dashboard ini otomatis di-dispose oleh Navigator.toLogin(this)
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 

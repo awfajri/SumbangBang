@@ -38,22 +38,22 @@ public class Admin extends User {
     // Admin Methods
     public List<FoodDonation> viewAllDonations() {
         System.out.println("Fetching all donations...");
-        return null; // Implementation di DAO layer
+        return null; 
     }
     
     public List<Reservation> viewAllReservations() {
         System.out.println("Fetching all reservations...");
-        return null; // Implementation di DAO layer
+        return null; 
     }
     
     public List<User> viewAllUsers() {
         System.out.println("Fetching all users...");
-        return null; // Implementation di DAO layer
+        return null; 
     }
     
     public boolean deleteData(String type, String id) {
         System.out.println("Deleting " + type + " with ID: " + id);
-        return true; // Implementation di DAO layer
+        return true; 
     }
     
     public String generateReport() {

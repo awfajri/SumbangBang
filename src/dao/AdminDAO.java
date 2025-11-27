@@ -12,7 +12,6 @@ public class AdminDAO {
     }
 
     // --- data 3 card di main page
-    
     public int getTotalDonations() {
         return getCount("SELECT COUNT(*) AS total FROM food_donations");
     }
@@ -36,10 +35,8 @@ public class AdminDAO {
         return 0;
     }
 
-    // --- aktivitas terbaru untuk tabel dashboardAdmin
-    // Kita ambil data 10 donasi terbaru yang diposting
+    // statistik
     public DefaultTableModel getRecentActivities() {
-        // Kolom sesuai desain tabel kamu
         String[] columns = {"Waktu", "Aktivitas", "User", "Status", "Aksi"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -52,7 +49,7 @@ public class AdminDAO {
             while (rs.next()) {
                 // Ambil data per baris
                 String rawTime = rs.getString("created_at");
-                String time = rawTime.substring(11, 16); // Ambil jam:menit saja (YYYY-MM-DD HH:MM:SS)
+                String time = rawTime.substring(11, 16);
                 String activity = "Donasi " + rs.getString("food_name");
                 String user = rs.getString("donor_name");
                 String status = rs.getString("status");
@@ -71,7 +68,6 @@ public class AdminDAO {
         String[] columns = {"ID", "Makanan", "Penerima", "Tgl Reservasi", "Status", "Kode Pickup"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        // Query Join: Reservations + Food Donations + Users (Penerima)
         String sql = "SELECT r.reservation_id, f.food_name, u.name AS recipient_name, " +
                      "r.reservation_time, r.status, r.pickup_code " +
                      "FROM reservations r " +
@@ -115,7 +111,7 @@ public class AdminDAO {
                     rs.getString("comment_id"),
                     rs.getString("recipient_name"),
                     rs.getString("donor_name"),
-                    rs.getInt("rating") + "/5", // Format rating misal "5/5"
+                    rs.getInt("rating") + "/5", 
                     rs.getString("comment_text"),
                     rs.getString("comment_date")
                 });
@@ -174,7 +170,7 @@ public class AdminDAO {
                     rs.getString("email"),
                     rs.getString("phone"),
                     rs.getString("role"),
-                    rs.getString("specific_type") // Akan berisi 'Restaurant', 'Panti Asuhan', atau '-'
+                    rs.getString("specific_type")
                 });
             }
         } catch (SQLException e) {
@@ -182,8 +178,8 @@ public class AdminDAO {
         }
         return model;
     }
+    
     // --- BAGIAN CRUD: DELETE METHODS ---
-
     // 1. Hapus Reservasi
     public boolean deleteReservation(String id) {
         return executeDelete("DELETE FROM reservations WHERE reservation_id = ?", id);
@@ -245,7 +241,7 @@ public class AdminDAO {
         }
     }
     
-    // 3. Update Status Reservasi (Opsional, jika admin mau ubah status manual)
+    // 3. Update Status Reservasi
     public boolean updateReservationStatus(String id, String status) {
         String sql = "UPDATE reservations SET status = ? WHERE reservation_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -258,7 +254,7 @@ public class AdminDAO {
         }
     }
   
-    // 4. Update Komentar (Isi & Rating)
+    // 4. Update Komentar
     public boolean updateComment(String id, String text, int rating) {
         String sql = "UPDATE comments SET comment_text = ?, rating = ? WHERE comment_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -272,8 +268,7 @@ public class AdminDAO {
         }
     }
     // --- BAGIAN CRUD: CREATE METHODS ---
-
-    // Helper untuk Generate ID Otomatis (USR004, DON005, dst)
+    // Helper untuk Generate ID Otomatis
     public String generateId(String prefix, String tableName, String colName) {
         String sql = "SELECT " + colName + " FROM " + tableName + " ORDER BY " + colName + " DESC LIMIT 1";
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
@@ -285,7 +280,7 @@ public class AdminDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return prefix + "001"; // Default jika kosong
+        return prefix + "001";
     }
 
     // 1. Tambah User Baru
@@ -325,7 +320,7 @@ public class AdminDAO {
         }
     }
 
-    // 3. Tambah Reservasi (Menggunakan Stored Procedure yang sudah kita buat di DB)
+    // 3. Tambah Reservasi
     public boolean createReservation(String donationId, String recipientId) {
         String sql = "{CALL sp_create_reservation(?, ?, ?, ?)}";
         try (CallableStatement stmt = conn.prepareCall(sql)) {

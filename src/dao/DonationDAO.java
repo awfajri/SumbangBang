@@ -145,7 +145,6 @@ public class DonationDAO {
         try {
             donation.setDonorName(rs.getString("donor_name"));
         } catch (SQLException e) {
-            // donor_name not in query
         }
         
         return donation;
@@ -176,7 +175,6 @@ public class DonationDAO {
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
-            // Kita pakai helper method yang sudah kamu punya
             donation = mapResultSetToDonation(rs); 
         }
         rs.close();
@@ -189,7 +187,6 @@ public class DonationDAO {
     public List<FoodDonation> searchDonations(String keyword) {
         List<FoodDonation> list = new ArrayList<>();
         
-        // Query SQL menggunakan LIKE %...% untuk pencarian mirip
         String sql = "SELECT fd.*, u.name as donor_name FROM food_donations fd " +
                      "JOIN users u ON fd.donor_id = u.user_id " +
                      "WHERE fd.status = 'AVAILABLE' AND fd.expiry_date >= CURDATE() " +
@@ -244,10 +241,7 @@ public class DonationDAO {
             return null;
         }
     }
-    // --- BAGIAN KOMENTAR ---
 
-    // 1. Ambil Data Reservasi berdasarkan Kode Pickup (Untuk form komentar)
-    // Return array string: [reservation_id, donor_id, food_name]
     public String[] getReservationDetailByCode(String pickupCode) {
         String sql = "SELECT r.reservation_id, fd.donor_id, fd.food_name " +
                      "FROM reservations r " +
@@ -268,16 +262,13 @@ public class DonationDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Tidak ketemu
+        return null; 
     }
 
     // 2. Simpan Komentar Baru
     public boolean insertComment(String resId, String recipientId, String donorId, String text, int rating) {
-        // Generate ID Komentar (COMxxx)
-        String commentId = "COM" + System.currentTimeMillis(); // Cara cepat generate ID unik
-        
-        // Atau gunakan logic generateId() kalau mau urut (bisa copas dari AdminDAO kalau perlu)
-        // Disini kita pakai timestamp biar praktis & unik
+        // Generate ID Komentar
+        String commentId = "COM" + System.currentTimeMillis(); 
         
         String sql = "INSERT INTO comments (comment_id, reservation_id, recipient_id, donor_id, comment_text, rating) VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -295,10 +286,7 @@ public class DonationDAO {
             return false;
         }
     }
-    // ==========================================
-    // BAGIAN STATISTIK DONATUR (Hilang saat Merge)
-    // ==========================================
-
+    // statistik
     // 1. Hitung Total Donasi Saya
     public int getTotalDonationsByDonor(String donorId) {
         String sql = "SELECT COUNT(*) AS total FROM food_donations WHERE donor_id = ?";

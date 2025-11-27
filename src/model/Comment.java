@@ -10,19 +10,19 @@ public class Comment {
     private String commentId;
     private String reservationId;
     private String recipientId;
-    private String recipientName; // Untuk tampilan nama penerima
+    private String recipientName; 
     private String donorId;
     private String foodName;
     private String commentText;
-    private int rating; // 1-5
+    private int rating; 
     
-    // Kita gunakan java.sql.Date agar kompatibel dengan DAO
+    
     private Date commentDate; 
     
-    // Constructor Kosong
+    // Constructor 
     public Comment() {}
     
-    // Constructor Lengkap
+    // Constructor 
     public Comment(String commentId, String reservationId, String recipientId, 
                    String donorId, String commentText, int rating) {
         this.commentId = commentId;
@@ -36,7 +36,6 @@ public class Comment {
     }
     
     // --- Business Methods ---
-    
     public boolean validate() {
         // Cek rating 1-5
         if (rating < 1 || rating > 5) {
@@ -51,8 +50,7 @@ public class Comment {
         return true;
     }
     
-    // --- GETTERS AND SETTERS (SUDAH DIPERBAIKI) ---
-
+    // --- GETTERS AND SETTERS ---
     public String getFoodName() { return foodName; }
     public void setFoodName(String foodName) { this.foodName = foodName; }
     
@@ -77,13 +75,10 @@ public class Comment {
     public int getRating() { return rating; }
     public void setRating(int rating) { this.rating = rating; }
     
-    // GETTER DATE
     public Date getDate() { 
         return commentDate; 
     }
 
-    // SETTER DATE (SUDAH BENAR)
-    // Tidak ada lagi 'throw exception'
     public void setDate(Date date) {
         this.commentDate = date;
     }

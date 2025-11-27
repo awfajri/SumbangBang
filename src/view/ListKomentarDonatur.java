@@ -64,11 +64,11 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
                 String recipient = c.getRecipientName();
                 String food = "Menu: " + c.getFoodName();
                 String date = dateFormat.format(c.getDate());
-                String content = "<html><div style='width:220px'>" + c.getCommentText() + "</div></html>"; // Word wrap text
-                String ratingStr = "⭐".repeat(c.getRating()); // Ulangi icon bintang sesuai rating
+                String content = "<html><div style='width:220px'>" + c.getCommentText() + "</div></html>"; 
+                String ratingStr = "⭐".repeat(c.getRating()); 
 
                     // === SETUP CARD ===
-                    JPanel card = new JPanel(new BorderLayout()); // Hapus gap
+                    JPanel card = new JPanel(new BorderLayout()); 
                     card.setBackground(Color.WHITE);
 
                     // 1. HAPUS PADDING DI SINI (Cukup garis pinggir saja)
@@ -77,19 +77,16 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
                     // 2. BUAT STRIP HIJAU (KIRI)
                     JPanel greenStrip = new JPanel();
                     greenStrip.setBackground(PRIMARY_COLOR);
-                    greenStrip.setPreferredSize(new Dimension(10, 0)); // Lebar 10px
+                    greenStrip.setPreferredSize(new Dimension(10, 0)); 
 
-                    // 3. BUAT PANEL KONTEN (TENGAH)
-                    // Panel ini yang akan menampung semua teks
+                    // 3. BUAT PANEL KONTEN 
                     JPanel contentPanel = new JPanel();
                     contentPanel.setLayout(new javax.swing.BoxLayout(contentPanel, javax.swing.BoxLayout.Y_AXIS));
                     contentPanel.setBackground(Color.WHITE);
 
                     // 4. PINDAHKAN PADDING KE SINI
-                    // Supaya teksnya rapi (tidak nempel ke garis hijau)
                     contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
 
-                // === BAGIAN ATAS (Nama & Tanggal) ===
                 JPanel topPanel = new JPanel(new BorderLayout());
                 topPanel.setBackground(Color.WHITE);
                 
@@ -104,7 +101,6 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
                 topPanel.add(lblName, BorderLayout.WEST);
                 topPanel.add(lblDate, BorderLayout.EAST);
 
-                // === BAGIAN TENGAH (Menu & Rating) ===
                 JPanel midPanel = new JPanel(new GridLayout(2, 1));
                 midPanel.setBackground(Color.WHITE);
                 midPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 10, 0)); // Jarak atas bawah
@@ -119,28 +115,22 @@ public class ListKomentarDonatur extends javax.swing.JFrame {
                 midPanel.add(lblFood);
                 midPanel.add(lblRating);
 
-                // === BAGIAN BAWAH (Isi Komentar) ===
                 JLabel lblContent = new JLabel(content);
                 lblContent.setFont(new Font("Lufga", Font.PLAIN, 13));
                 lblContent.setForeground(new Color(80, 80, 80));
 
-                // === MASUKKAN TEKS KE CONTENT PANEL ===
-                // Masukkan bagian-bagian teks ke dalam 'contentPanel', bukan langsung ke 'card'
                 contentPanel.add(topPanel);
                 contentPanel.add(midPanel);
                 contentPanel.add(lblContent);
 
-                // === GABUNGKAN KE KARTU UTAMA ===
-                card.add(greenStrip, BorderLayout.WEST);    // Strip hijau di kiri full tinggi
-                card.add(contentPanel, BorderLayout.CENTER); // Teks di tengah
+                card.add(greenStrip, BorderLayout.WEST);    
+                card.add(contentPanel, BorderLayout.CENTER);
 
-                // Masukkan ke Panel Utama
                 panelListUlasan.add(card);
-                panelListUlasan.add(Box.createVerticalStrut(15)); // Jarak antar kartu
+                panelListUlasan.add(Box.createVerticalStrut(15)); 
             }
         }
         
-        // Refresh UI
         panelListUlasan.revalidate();
         panelListUlasan.repaint();
     }

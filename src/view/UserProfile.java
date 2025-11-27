@@ -25,7 +25,7 @@ public class UserProfile extends javax.swing.JFrame {
         this.currentUser = user;
         
         setupProfileData();
-        setLocationRelativeTo(null); // Tengah layar
+        setLocationRelativeTo(null);
     }
     private void setupProfileData() {
         if (currentUser != null) {

@@ -7,18 +7,12 @@
  *
  * @author User
  */
-import config.DatabaseConfig;
-import java.sql.Connection;
+import model.User;
+import view.SplashScreen; 
+
 
 public class Main {
     public static void main(String[] args) {
-        DatabaseConfig db = DatabaseConfig.getInstance();
-        Connection conn = db.getConnection();
-        
-        if (conn != null) {
-            System.out.println("✅ Database connected!");
-        } else {
-            System.out.println("❌ Connection failed!");
-        }
+        new SplashScreen().setVisible(true);
     }
 }

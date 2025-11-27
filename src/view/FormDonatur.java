@@ -162,83 +162,126 @@ public class FormDonatur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPostDonasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostDonasiActionPerformed
-    // 1. Ambil data dari Form (Ganti 'namaField' dengan nama variabel kamu)
-    String foodName = fieldNama.getText().trim();
-    String quantityStr = fieldJumlah.getText().trim();
-    String expiryDateStr = fieldTanggal.getText().trim(); // Asumsi ini JTextfield
-    String location = fieldLokasi.getText().trim();
+    // ========================================================================
+        // 1. AMBIL DATA DARI FORM INPUT
+        // ========================================================================
+        String foodName = fieldNama.getText().trim();
+        String quantityStr = fieldJumlah.getText().trim();
+        String expiryDateStr = fieldTanggal.getText().trim(); 
+        String location = fieldLokasi.getText().trim();
+        String description = "-";
 
-    // 2. Validasi Input Sederhana
-    if (foodName.isEmpty() || quantityStr.isEmpty() || expiryDateStr.isEmpty() || location.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // 3. Persiapan Data untuk DAO
-    try {
-        DonationDAO dao = new DonationDAO();
-        
-        // Konversi quantity (jumlah) ke angka
-        int quantity = Integer.parseInt(quantityStr);
-        
-        // Konversi tanggal
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        java.util.Date parsedDate = format.parse(expiryDateStr);
-        java.sql.Date expiryDate = new java.sql.Date(parsedDate.getTime());
-
-        // Buat Objek FoodDonation
-        FoodDonation donation = new FoodDonation();
-        donation.setFoodName(foodName);
-        donation.setQuantity(quantity);
-        donation.setExpiryDate(expiryDate);
-        donation.setPickupLocation(location);
-        donation.setDescription(foodName); // (atau tambahkan field deskripsi)
-
-        boolean isSuccess = false;
-        
-        if (isEditMode) {
-            donation.setDonationId(this.donationIdToEdit);
-            // Panggil method 'updateDonation' 
-            isSuccess = dao.updateDonation(donation); 
-            
-        } else {
-            // === MODE INSERT BARU ===
-            String donorId = SumbangBang.loggedInUser.getUserId();
-            String newDonationId = dao.generateDonationId();
-            
-            donation.setDonationId(newDonationId);
-            donation.setDonorId(donorId);
-            donation.setStatus("AVAILABLE");
-            
-            // Panggil method 'insertDonation'
-            isSuccess = dao.insertDonation(donation); 
+        // ========================================================================
+        // 2. VALIDASI INPUT DASAR (Cek Kosong)
+        // ========================================================================
+        if (foodName.isEmpty() || quantityStr.isEmpty() || expiryDateStr.isEmpty() || location.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mohon lengkapi semua data donasi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return; // Berhenti, jangan lanjut
         }
 
-        // 6. Tampilkan pesan berdasarkan hasil
-        if (isSuccess) {
-            String message = isEditMode ? "Donasi berhasil di-update!" : "Donasi berhasil diposting!";
-            JOptionPane.showMessageDialog(this, message);
+        try {
+            // ====================================================================
+            // 3. PERSIAPAN & KONVERSI DATA
+            // ====================================================================
+            DonationDAO dao = new DonationDAO();
             
-            // Suruh dashboard untuk refresh datanya
-            if (this.parentDashboard != null) {
-                this.parentDashboard.loadDashboardData();
+            // A. Konversi Jumlah (String -> Integer)
+            int quantity = Integer.parseInt(quantityStr);
+            if (quantity < 0) {
+                JOptionPane.showMessageDialog(this, "Jumlah porsi tidak boleh negatif!", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
             }
-            
-            this.dispose();
-            
-        } else {
-            String message = isEditMode ? "Gagal meng-update donasi." : "Gagal memposting donasi.";
-            JOptionPane.showMessageDialog(this, message, "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
 
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Jumlah Porsi harus berupa angka.", "Input Error", JOptionPane.ERROR_MESSAGE);
-    } catch (java.text.ParseException e) {
-        JOptionPane.showMessageDialog(this, "Format Tanggal Kadaluarsa salah. Gunakan format: MM/dd/yyyy", "Input Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+            // B. Konversi Tanggal (String -> SQL Date)
+            // Fitur: Smart Parsing (Mencegah bug tahun 3925)
+            java.sql.Date expiryDate = null;
+            try {
+                // Coba Format Indonesia (dd/MM/yyyy) -> Contoh: 20/02/2025
+                SimpleDateFormat formatIndo = new SimpleDateFormat("dd/MM/yyyy");
+                formatIndo.setLenient(false); // Ketat, tgl 32 akan error
+                java.util.Date parsed = formatIndo.parse(expiryDateStr);
+                expiryDate = new java.sql.Date(parsed.getTime());
+            } catch (Exception e1) {
+                try {
+                    expiryDate = java.sql.Date.valueOf(expiryDateStr);
+                } catch (Exception e2) {
+                    // Jika gagal semua, tampilkan error jelas
+                    JOptionPane.showMessageDialog(this, 
+                        "Format Tanggal Salah!\nGunakan format: Tgl/Bln/Thn (Contoh: 20/02/2025)", 
+                        "Error Tanggal", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // ====================================================================
+            // 4. BUNGKUS DATA KE OBJEK (FoodDonation)
+            // ====================================================================
+            FoodDonation donation = new FoodDonation();
+            donation.setFoodName(foodName);
+            donation.setQuantity(quantity);
+            donation.setExpiryDate(expiryDate);
+            donation.setPickupLocation(location);
+            donation.setDescription(description);
+
+            boolean isSuccess = false;
+
+            // ====================================================================
+            // 5. CEK MODE: UPDATE atau INSERT BARU?
+            // ====================================================================
+            if (isEditMode) {
+                // --- MODE EDIT ---
+                donation.setDonationId(this.donationIdToEdit);
+                
+                // Panggil DAO Update
+                isSuccess = dao.updateDonation(donation);
+                
+            } else {
+                // --- MODE INSERT BARU ---
+                // 1. Ambil ID User yang sedang Login
+                if (SumbangBang.loggedInUser == null) {
+                    JOptionPane.showMessageDialog(this, "Sesi habis, silakan login ulang.");
+                    new login().setVisible(true);
+                    this.dispose();
+                    return;
+                }
+                String donorId = SumbangBang.loggedInUser.getUserId();
+                
+                // 2. Generate ID Donasi Baru (DONxxx)
+                String newDonationId = dao.generateDonationId();
+                
+                // 3. Lengkapi data
+                donation.setDonationId(newDonationId);
+                donation.setDonorId(donorId);
+                donation.setStatus("AVAILABLE"); // Default status
+                
+                // Panggil DAO Insert
+                isSuccess = dao.insertDonation(donation);
+            }
+
+            // ====================================================================
+            // 6. HASIL EKSEKUSI
+            // ====================================================================
+            if (isSuccess) {
+                String msg = isEditMode ? "Data donasi berhasil diperbarui!" : "Donasi berhasil diposting!";
+                JOptionPane.showMessageDialog(this, msg);
+                
+                // Refresh Dashboard Donatur (Penting agar data langsung muncul)
+                if (this.parentDashboard != null) {
+                    this.parentDashboard.loadDashboardData(); 
+                }
+                
+                this.dispose(); // Tutup form
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal menyimpan data ke database.", "Gagal", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Jumlah Porsi harus berupa angka!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan sistem: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnPostDonasiActionPerformed
 
     /**

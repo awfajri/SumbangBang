@@ -51,7 +51,7 @@ CREATE DATABASE sumbangbang_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uni
 -- GRANT ALL PRIVILEGES ON sumbangbang_db.* TO 'sumbang'@'localhost';
 ```
 
-Catatan: Skema tabel (CREATE TABLE) tidak disertakan di repo; silakan lihat nama model dan DAO di `src/model` dan `src/dao` sebagai acuan untuk membuat tabel yang sesuai. Jika Anda mau, saya bisa membantu membuat skrip SQL skema awal berdasarkan model di repo.
+Catatan: Skema tabel (CREATE TABLE) tidak disertakan di repo; silakan lihat nama model dan DAO di `src/model` dan `src/dao` sebagai acuan untuk membuat tabel yang sesuai.
 
 Build & Run
 -----------
@@ -70,11 +70,6 @@ ant -f build.xml
 ```
 
 Catatan: Penamaan class `Main` dan package default ada di `src/Main.java`.
-
-Kontribusi
-----------
-- Untuk perubahan kecil: buka issue atau kirimkan PR.
-- Jika Anda ingin bantuan menulis skrip SQL untuk skema atau mengemas aplikasi menjadi JAR, beri tahu saya dan saya akan bantu.
 
 Masalah umum & debugging
 ------------------------
